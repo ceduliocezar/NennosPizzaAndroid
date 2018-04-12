@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
+
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        applicationId "ceduliocezar.com.nennospizza"
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            testCoverageEnabled true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        animationsDisabled = true
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+
+ext {
+    supportLibraryVersion = '27.1.0'
+    daggerVersion = "2.15"
+    butterKnifeVersion = '8.8.1'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(':data')
+    implementation project(':domain')
+
+    def presentationDependencies = rootProject.ext.presentationDependencies
+    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
+
+    annotationProcessor  presentationDependencies.daggerCompiler
+    annotationProcessor  presentationDependencies.butterKnifeCompiler
+    compileOnly presentationDependencies.javaxAnnotation
+
+    implementation presentationDependencies.dagger
+    implementation presentationDependencies.rxJava
+    implementation presentationDependencies.rxAndroid
+    implementation presentationDependencies.butterKnife
+
+
+    implementation presentationDependencies.supportV4
+    implementation presentationDependencies.appCompat
+    implementation presentationDependencies.supportCompat
+    implementation presentationDependencies.supportDesign
+    implementation presentationDependencies.constraintLayout
+
+
+    testImplementation presentationTestDependencies.junit
+    testImplementation presentationTestDependencies.mockito
+    androidTestImplementation presentationTestDependencies.androidTestRunner
+    androidTestImplementation presentationTestDependencies.espresso
+}

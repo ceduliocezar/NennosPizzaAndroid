@@ -1,0 +1,81 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "27.0.3"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
+
+    //Libraries
+    daggerVersion = '2.8'
+    butterKnifeVersion = '8.8.1'
+    rxJavaVersion = '2.1.10'
+    rxAndroidVersion = '2.0.1'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    androidAnnotationsVersion = '21.0.3'
+    androidSupportLibraryVersion = '27.1.0'
+    constraintLayoutVersion = '1.0.2'
+
+    //Testing
+    jUnitVersion = '4.12'
+    espressoVersion = '3.0.1'
+    androidSupportTestVersion ='1.0.1'
+    mockitoVersion = '2.8.47'
+
+
+    presentationDependencies = [
+            daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:                 "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeCompiler:    "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            rxJava:                 "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid:              "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation:        "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            constraintLayout:       "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
+            supportV4:              "com.android.support:support-v4:${androidSupportLibraryVersion}",
+            appCompat:              "com.android.support:appcompat-v7:${androidSupportLibraryVersion}",
+            supportCompat:          "com.android.support:support-compat:${androidSupportLibraryVersion}",
+            supportDesign:          "com.android.support:design:${androidSupportLibraryVersion}"
+    ]
+
+    presentationTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            androidTestRunner:  "com.android.support.test:runner:${androidSupportTestVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}"
+    ]
+
+    domainDependencies = [
+            javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+            rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+    ]
+
+    domainTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}",
+    ]
+
+    dataDependencies = [
+            appCompat:          "com.android.support:appcompat-v7:${androidSupportLibraryVersion}",
+            daggerCompiler:     "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger:             "com.google.dagger:dagger:${daggerVersion}",
+            rxJava:             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid:          "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation:    "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            javaxInject:        "javax.inject:javax.inject:${javaxInjectVersion}",
+    ]
+
+    dataTestDependencies = [
+            junit:              "junit:junit:${jUnitVersion}",
+            espresso:           "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            androidTestRunner:  "com.android.support.test:runner:${androidSupportTestVersion}",
+            mockito:            "org.mockito:mockito-core:${mockitoVersion}"
+    ]
+}
