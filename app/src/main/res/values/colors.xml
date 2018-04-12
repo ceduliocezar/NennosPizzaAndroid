@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#E0E0E0</color>
+    <color name="colorAccent">#E14D45</color>
+    <color name="legend_color">#66000000</color>
+    <color name="badge_text_color">#FFFFFF</color>
+    <color name="small_cart_button_color">#FFCD2B</color>
 </resources>

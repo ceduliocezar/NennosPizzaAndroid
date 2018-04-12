@@ -15,7 +15,7 @@
  */
 package ceduliocezar.com.domain.interactor;
 
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
 import io.reactivex.Observable;
@@ -37,11 +37,11 @@ public abstract class UseCase<T, Params> {
     private final ThreadExecutor threadExecutor;
     private final PostExecutionThread postExecutionThread;
     private final CompositeDisposable disposables;
-    private final AppLogger logger;
+    private final Logger logger;
 
     protected UseCase(ThreadExecutor threadExecutor,
                       PostExecutionThread postExecutionThread,
-                      AppLogger logger) {
+                      Logger logger) {
         this.threadExecutor = threadExecutor;
         this.postExecutionThread = postExecutionThread;
         this.disposables = new CompositeDisposable();
@@ -83,7 +83,7 @@ public abstract class UseCase<T, Params> {
         disposables.add(disposable);
     }
 
-    public AppLogger getLogger() {
+    public Logger getLogger() {
         return logger;
     }
 }

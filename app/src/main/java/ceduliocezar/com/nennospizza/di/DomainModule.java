@@ -1,6 +1,11 @@
 package ceduliocezar.com.nennospizza.di;
 
+import ceduliocezar.com.data.repository.ingredient.IngredientDataRepository;
+import ceduliocezar.com.data.repository.pizza.PizzaDataRepository;
+import ceduliocezar.com.domain.repository.IngredientRepository;
+import ceduliocezar.com.domain.repository.PizzaRepository;
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Module for domain classes.
@@ -8,5 +13,16 @@ import dagger.Module;
  */
 @Module
 public class DomainModule {
+
+    @Provides
+    @SuppressWarnings("unused")
+    PizzaRepository providesPizzaRepository(PizzaDataRepository pizzaDataRepository) {
+        return pizzaDataRepository;
+    }
+
+    @Provides
+    IngredientRepository providesIngredientRepository(IngredientDataRepository ingredientDataRepository) {
+        return ingredientDataRepository;
+    }
 
 }
