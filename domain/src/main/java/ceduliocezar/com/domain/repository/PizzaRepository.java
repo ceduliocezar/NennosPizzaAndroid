@@ -13,5 +13,5 @@ public interface PizzaRepository {
 
     Observable<List<Pizza>> list();
 
-    Observable<Pizza> get(final int pizzaId);
+    Observable<Pizza> getPizzaByName(String pizzaName);
 }
