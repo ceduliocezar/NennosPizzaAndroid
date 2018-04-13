@@ -6,18 +6,16 @@ import java.util.List;
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class Pizza {
+public class PizzaSummary {
 
     private String name;
-    private List<Ingredient> ingredients;
-    private String imageUrl;
+    private List<String> ingredients;
+    private double totalPrice;
 
-
-
-    public Pizza(String name, List<Ingredient> ingredients, String imageUrl) {
+    public PizzaSummary(String name, List<String> ingredients, double totalPrice) {
         this.name = name;
         this.ingredients = ingredients;
-        this.imageUrl = imageUrl;
+        this.totalPrice = totalPrice;
     }
 
     public String getName() {
@@ -28,28 +26,28 @@ public class Pizza {
         this.name = name;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     @Override
     public String toString() {
-        return "Pizza{" +
+        return "PizzaSummary{" +
                 "name='" + name + '\'' +
                 ", ingredients=" + ingredients +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", totalPrice=" + totalPrice +
                 '}';
     }
 }

@@ -15,8 +15,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "nennosEndpointUrl", "\"https://api.myjson.com/bins/\""
+        // should read from gradle param or system env var, however hardcoded to ease the build for whom may concern
     }
     buildTypes {
+
 
         debug {
             testCoverageEnabled true
@@ -60,14 +64,16 @@ dependencies {
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
 
-    annotationProcessor  presentationDependencies.daggerCompiler
-    annotationProcessor  presentationDependencies.butterKnifeCompiler
+    annotationProcessor presentationDependencies.daggerCompiler
+    annotationProcessor presentationDependencies.butterKnifeCompiler
+    annotationProcessor presentationDependencies.glideCompiler
     compileOnly presentationDependencies.javaxAnnotation
 
     implementation presentationDependencies.dagger
     implementation presentationDependencies.rxJava
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.butterKnife
+    implementation presentationDependencies.retrofit
 
 
     implementation presentationDependencies.supportV4
@@ -75,6 +81,8 @@ dependencies {
     implementation presentationDependencies.supportCompat
     implementation presentationDependencies.supportDesign
     implementation presentationDependencies.constraintLayout
+    implementation presentationDependencies.recyclerView
+    implementation presentationDependencies.glide
 
 
     testImplementation presentationTestDependencies.junit

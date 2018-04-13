@@ -3,6 +3,10 @@ package ceduliocezar.com.nennospizza.di;
 import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Named;
+
+import ceduliocezar.com.data.logging.LogcatLogger;
+import ceduliocezar.com.domain.logging.AppLogger;
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,7 +26,14 @@ public class AppModule {
 
     @Provides
     @SuppressWarnings("unused")
+    @Named("applicationContext")
     public Context providesApplicationContext() {
         return application;
+    }
+
+    @Provides
+    @SuppressWarnings("unused")
+    public AppLogger providesAppLogger(LogcatLogger logcatLogger) {
+        return logcatLogger;
     }
 }

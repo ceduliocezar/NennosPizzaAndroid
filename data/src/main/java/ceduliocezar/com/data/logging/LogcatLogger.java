@@ -2,6 +2,8 @@ package ceduliocezar.com.data.logging;
 
 import android.util.Log;
 
+import javax.inject.Inject;
+
 import ceduliocezar.com.domain.logging.AppLogger;
 
 /**
@@ -10,6 +12,12 @@ import ceduliocezar.com.domain.logging.AppLogger;
  */
 
 public class LogcatLogger implements AppLogger {
+
+    @Inject
+    public LogcatLogger() {
+        // DI constructor
+    }
+
     @Override
     public void debug(String tag, String message) {
         Log.d(tag, message);

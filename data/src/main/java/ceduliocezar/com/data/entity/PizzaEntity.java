@@ -1,4 +1,6 @@
-package ceduliocezar.com.domain;
+package ceduliocezar.com.data.entity;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -6,15 +8,18 @@ import java.util.List;
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class Pizza {
+public class PizzaEntity {
 
+    @SerializedName("name")
     private String name;
-    private List<Ingredient> ingredients;
+
+    @SerializedName("ingredients")
+    private List<Integer> ingredients;
+
+    @SerializedName("imageUrl")
     private String imageUrl;
 
-
-
-    public Pizza(String name, List<Ingredient> ingredients, String imageUrl) {
+    public PizzaEntity(String name, List<Integer> ingredients, String imageUrl) {
         this.name = name;
         this.ingredients = ingredients;
         this.imageUrl = imageUrl;
@@ -28,11 +33,11 @@ public class Pizza {
         this.name = name;
     }
 
-    public List<Ingredient> getIngredients() {
+    public List<Integer> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(List<Integer> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -44,9 +49,10 @@ public class Pizza {
         this.imageUrl = imageUrl;
     }
 
+
     @Override
     public String toString() {
-        return "Pizza{" +
+        return "PizzaEntity{" +
                 "name='" + name + '\'' +
                 ", ingredients=" + ingredients +
                 ", imageUrl='" + imageUrl + '\'' +

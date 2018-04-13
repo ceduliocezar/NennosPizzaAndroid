@@ -1,6 +1,14 @@
 package ceduliocezar.com.nennospizza.di;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
+import javax.inject.Named;
+
+import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListContract;
+import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListPresenter;
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Module that provides presentation classes.
@@ -8,4 +16,11 @@ import dagger.Module;
  */
 @Module
 public class PresentationModule {
+
+    @Provides
+    @SuppressWarnings("unused")
+    public PizzaListContract.Presenter providesPizzaListPresenter(PizzaListPresenter presenter) {
+        return presenter;
+    }
+
 }
