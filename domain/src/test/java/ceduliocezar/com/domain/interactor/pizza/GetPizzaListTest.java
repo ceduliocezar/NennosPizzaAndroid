@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.PizzaRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
@@ -45,7 +45,7 @@ public class GetPizzaListTest {
 
     @Mock
     @SuppressWarnings("unused")
-    private AppLogger appLogger;
+    private Logger logger;
 
 
     @Test

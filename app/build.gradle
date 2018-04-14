@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'jacoco'
 
-
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
@@ -14,7 +13,7 @@ android {
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "ceduliocezar.com.nennospizza.MockTestRunner"
 
         buildConfigField "String", "nennosEndpointUrl", "\"https://api.myjson.com/bins/\""
         // should read from gradle param or system env var, however hardcoded to ease the build for whom may concern
@@ -48,12 +47,6 @@ android {
     }
 }
 
-ext {
-    supportLibraryVersion = '27.1.0'
-    daggerVersion = "2.15"
-    butterKnifeVersion = '8.8.1'
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -64,6 +57,7 @@ dependencies {
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
 
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor presentationDependencies.daggerCompiler
     annotationProcessor presentationDependencies.butterKnifeCompiler
     annotationProcessor presentationDependencies.glideCompiler
@@ -83,10 +77,17 @@ dependencies {
     implementation presentationDependencies.constraintLayout
     implementation presentationDependencies.recyclerView
     implementation presentationDependencies.glide
+    implementation presentationDependencies.badge
 
 
     testImplementation presentationTestDependencies.junit
     testImplementation presentationTestDependencies.mockito
     androidTestImplementation presentationTestDependencies.androidTestRunner
+    androidTestImplementation presentationTestDependencies.androidTestRules
+    androidTestImplementation presentationTestDependencies.mockitoAndroid
+    androidTestImplementation presentationTestDependencies.hamcrestLibrary
     androidTestImplementation presentationTestDependencies.espresso
+    androidTestImplementation presentationTestDependencies.espressoIntents
+    androidTestImplementation presentationTestDependencies.espressoContrib
+    androidTestAnnotationProcessor presentationTestDependencies.daggerCompiler
 }

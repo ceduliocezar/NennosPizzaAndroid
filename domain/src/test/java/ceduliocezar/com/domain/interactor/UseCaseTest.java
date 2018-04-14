@@ -25,7 +25,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
 import io.reactivex.Observable;
@@ -59,7 +59,7 @@ public class UseCaseTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Mock
-    private AppLogger logger;
+    private Logger logger;
 
     @Before
     public void setUp() {
@@ -93,7 +93,7 @@ public class UseCaseTest {
 
         UseCaseTestClass(ThreadExecutor threadExecutor,
                          PostExecutionThread postExecutionThread,
-                         AppLogger logger) {
+                         Logger logger) {
             super(threadExecutor, postExecutionThread, logger);
         }
 

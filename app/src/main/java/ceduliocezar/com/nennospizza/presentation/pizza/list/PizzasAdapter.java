@@ -67,6 +67,15 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
                 }
             }
         });
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClick != null) {
+                    onItemClick.onSelectedPizza(pizzaModel);
+                }
+            }
+        });
     }
 
     public void setOnItemClick(@Nullable OnItemClick onItemClick) {
@@ -75,7 +84,7 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
 
     private String toCSV(List<String> ingredients) {
         StringBuilder csvBuilder = new StringBuilder();
-        String separator = ",";
+        String separator = ", ";
         for (String ingredient : ingredients) {
             csvBuilder.append(ingredient);
             csvBuilder.append(separator);
@@ -94,8 +103,16 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
         notifyDataSetChanged();
     }
 
+    interface OnItemClick {
+
+        void onClickAddToCart(PizzaModel pizzaModel);
+
+        void onSelectedPizza(PizzaModel pizzaModel);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        View container;
         TextView pizzaNameTv;
         TextView ingredientsTv;
         TextView priceTv;
@@ -104,16 +121,12 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
 
         ViewHolder(View v) {
             super(v);
+            container = v;
             pizzaNameTv = v.findViewById(R.id.pizza_name_tv);
             ingredientsTv = v.findViewById(R.id.pizza_ingredients_tv);
             priceTv = v.findViewById(R.id.pizza_price_tv);
             pizzaImageView = v.findViewById(R.id.pizza_image);
             addToCartView = v.findViewById(R.id.add_to_cart_view);
         }
-    }
-
-    interface OnItemClick {
-
-        void onClickAddToCart(PizzaModel pizzaModel);
     }
 }

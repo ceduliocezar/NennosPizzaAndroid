@@ -4,14 +4,14 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 
 /**
- * Logcat implementation of {@link AppLogger}
+ * Logcat implementation of {@link Logger}
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class LogcatLogger implements AppLogger {
+public class LogcatLogger implements Logger {
 
     @Inject
     public LogcatLogger() {

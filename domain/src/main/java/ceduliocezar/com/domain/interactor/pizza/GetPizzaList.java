@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.UseCase;
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.PizzaRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
@@ -25,7 +25,7 @@ public class GetPizzaList extends UseCase<List<Pizza>, Void> {
     @Inject
     public GetPizzaList(ThreadExecutor threadExecutor,
                         PostExecutionThread postExecutionThread,
-                        AppLogger logger,
+                        Logger logger,
                         PizzaRepository pizzaRepository) {
         super(threadExecutor, postExecutionThread, logger);
         this.pizzaRepository = pizzaRepository;

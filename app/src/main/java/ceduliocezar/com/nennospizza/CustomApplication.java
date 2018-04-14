@@ -5,8 +5,6 @@ import android.app.Application;
 import ceduliocezar.com.nennospizza.di.AppComponent;
 import ceduliocezar.com.nennospizza.di.AppModule;
 import ceduliocezar.com.nennospizza.di.DaggerAppComponent;
-import ceduliocezar.com.nennospizza.di.DataModule;
-import ceduliocezar.com.nennospizza.di.DomainModule;
 import ceduliocezar.com.nennospizza.di.PresentationModule;
 
 /**
@@ -21,15 +19,13 @@ public class CustomApplication extends Application {
 
 
     /**
-     * Keep this method separated to enable override on android instrumented tests package.
+     * Dedicated method to only component creation to enable polymorphism on android instrumented tests package.
      */
     AppComponent createComponent() {
 
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
-                .dataModule(new DataModule())
                 .presentationModule(new PresentationModule())
-                .domainModule(new DomainModule())
                 .build();
     }
 

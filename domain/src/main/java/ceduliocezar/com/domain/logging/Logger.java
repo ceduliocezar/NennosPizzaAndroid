@@ -5,7 +5,7 @@ package ceduliocezar.com.domain.logging;
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public interface AppLogger {
+public interface Logger {
 
     void debug(String tag, String message);
 

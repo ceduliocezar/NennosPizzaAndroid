@@ -1,10 +1,13 @@
 package ceduliocezar.com.nennospizza.presentation.pizza.list;
 
-import android.content.pm.PackageManager;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,9 +21,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.CustomApplication;
 import ceduliocezar.com.nennospizza.R;
+import ceduliocezar.com.nennospizza.navigation.Navigator;
+import cn.nekocode.badge.BadgeDrawable;
 
 /**
  * Fragment that shows a list of Pizzas.
@@ -29,19 +34,23 @@ import ceduliocezar.com.nennospizza.R;
 public class PizzaListFragment extends Fragment implements PizzaListContract.View {
 
     private static final String TAG = "PizzaListFragment";
-    private static final int PERMISSIONS_REQUEST_INTERNET = 1;
 
     @Inject
     PizzaListContract.Presenter presenter;
 
     @Inject
-    PizzasAdapter pizzasAdapter;
+    Logger logger;
 
     @Inject
-    AppLogger logger;
+    Navigator navigator;
 
-    @BindView(R.id.pizzaRecyclerView)
+    @BindView(R.id.pizza_recycler_view)
     RecyclerView recyclerView;
+
+    private PizzasAdapter pizzasAdapter;
+
+    @Nullable
+    private Callback callback;
 
     public PizzaListFragment() {
         // mandatory android constructor
@@ -59,10 +68,16 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
                              ViewGroup container,
                              Bundle savedInstanceState) {
         logger.debug(TAG, "onCreateView");
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_pizza_list, container, false);
         ButterKnife.bind(this, view);
         initRecyclerView();
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.callback = (Callback) context;
     }
 
     private void initRecyclerView() {
@@ -74,19 +89,26 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
         ingredients.add("Acoroerjdm");
 
 
-        PizzaModel pizzaModel = new PizzaModel("id", "NAmsadasmna Name", ingredients, 25.50, "http://via.placeholder.com/350x150");
+        PizzaModel pizzaModel = new PizzaModel("id", "NAmsadasmna Name", ingredients, 25.50, Uri.parse("file:///android_asset/place_holder.png").toString());
 
         pizzas.add(pizzaModel);
         pizzas.add(pizzaModel);
         pizzas.add(pizzaModel);
         pizzas.add(pizzaModel);
 
+        pizzasAdapter = new PizzasAdapter(getActivity());
         pizzasAdapter.setPizzas(pizzas);
         pizzasAdapter.setOnItemClick(new PizzasAdapter.OnItemClick() {
             @Override
             public void onClickAddToCart(PizzaModel pizzaModel) {
                 logger.debug(TAG, "onClickAddToCart:" + pizzaModel.toString());
-                // TODO: 4/13/2018
+                presenter.userSelectedAddPizzaToCart(pizzaModel);
+            }
+
+            @Override
+            public void onSelectedPizza(PizzaModel pizzaModel) {
+                logger.debug(TAG, "onSelectedPizza:" + pizzaModel.toString());
+                presenter.userSelectedPizza(pizzaModel);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -98,23 +120,71 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
         super.onViewCreated(view, savedInstanceState);
         logger.debug(TAG, "onViewCreated");
         presenter.setView(this);
+        presenter.init();
 
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (PERMISSIONS_REQUEST_INTERNET == requestCode) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                presenter.init();
-            }
-        }
     }
 
     @Override
     public void showPizzas(List<PizzaModel> pizzas) {
         logger.debug(TAG, "showPizzas: " + pizzas.toString());
         pizzasAdapter.setPizzas(pizzas);
+    }
+
+    @Override
+    public void showCreateCustomPizzaScreen() {
+        logger.debug(TAG, "showCreateCustomPizzaScreen: ");
+        navigator.navigateToCreateCustomPizza(getActivity());
+    }
+
+    @Override
+    public void showDetailPizzaScreen() {
+        logger.debug(TAG, "showDetailPizzaScreen: ");
+        navigator.navigateToPizzaDetailScreen(getActivity());
+
+    }
+
+    @Override
+    public void showCartNotification(int itemsInCart) {
+        logger.debug(TAG, "showCartNotification: " + itemsInCart);
+
+        if (callback != null) {
+            final BadgeDrawable drawable =
+                    new BadgeDrawable.Builder()
+                            .type(BadgeDrawable.TYPE_NUMBER)
+                            .number(itemsInCart)
+                            .badgeColor(ContextCompat.getColor(getActivity(), R.color.colorAccent))
+                            .build();
+
+
+            callback.setCartNotificationDrawable(drawable);
+        } else {
+            logger.warn(TAG, "showCartNotification: callback not available");
+        }
+
+
+    }
+
+    @Override
+    public void hideCartNotification() {
+        logger.debug(TAG, "hideCartNotification: ");
+        if (callback != null) {
+            callback.setCartNotificationDrawable(null);
+        } else {
+            logger.warn(TAG, "hideCartNotification: callback not available");
+        }
+
+    }
+
+    public void onClickAddCustomPizza() {
+        logger.debug(TAG, "onClickAddCustomPizza: ");
+        navigator.navigateToCreateCustomPizza(getActivity());
+    }
+
+    public void onClickCart() {
+        navigator.navigateToCartScreen(getActivity());
+    }
+
+    public interface Callback {
+        void setCartNotificationDrawable(@Nullable Drawable drawable);
     }
 }

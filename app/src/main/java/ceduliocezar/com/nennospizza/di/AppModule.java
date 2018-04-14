@@ -6,7 +6,7 @@ import android.content.Context;
 import javax.inject.Named;
 
 import ceduliocezar.com.data.logging.LogcatLogger;
-import ceduliocezar.com.domain.logging.AppLogger;
+import ceduliocezar.com.domain.logging.Logger;
 import dagger.Module;
 import dagger.Provides;
 
@@ -33,7 +33,7 @@ public class AppModule {
 
     @Provides
     @SuppressWarnings("unused")
-    public AppLogger providesAppLogger(LogcatLogger logcatLogger) {
+    public Logger providesAppLogger(LogcatLogger logcatLogger) {
         return logcatLogger;
     }
 }
