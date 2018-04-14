@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.navigation.Navigator;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListContract;
+import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaModel;
 import dagger.Module;
 import dagger.Provides;
 
@@ -34,5 +35,11 @@ public class MockPresentationModule {
     @Provides
     Logger providesLogger() {
         return mock(Logger.class);
+    }
+
+    @Provides
+    @Singleton
+    PizzaModel providesPizzaModel() {
+        return mock(PizzaModel.class);
     }
 }

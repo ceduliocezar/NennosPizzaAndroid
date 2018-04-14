@@ -137,7 +137,7 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
     }
 
     @Override
-    public void showDetailPizzaScreen() {
+    public void showDetailPizzaScreen(PizzaModel pizzaModel) {
         logger.debug(TAG, "showDetailPizzaScreen: ");
         navigator.navigateToPizzaDetailScreen(getActivity());
 
@@ -162,6 +162,13 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
         }
 
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        logger.debug(TAG, "onDestroyView: ");
+        presenter.viewDestroyed();
     }
 
     @Override

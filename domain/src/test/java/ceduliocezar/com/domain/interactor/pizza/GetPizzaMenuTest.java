@@ -17,16 +17,16 @@ import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
 /**
- * Test suite for {@link GetPizzaList}
+ * Test suite for {@link GetPizzaMenu}
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class GetPizzaListTest {
+public class GetPizzaMenuTest {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
     @InjectMocks
-    private GetPizzaList getPizzaList;
+    private GetPizzaMenu getPizzaMenu;
 
     @Mock
     private PizzaRepository pizzaRepository;
@@ -51,7 +51,7 @@ public class GetPizzaListTest {
     @Test
     public void test_buildUseCaseObservable() {
 
-        getPizzaList.buildUseCaseObservable(null);
+        getPizzaMenu.buildUseCaseObservable(null);
 
         verify(pizzaRepository, only()).list();
     }

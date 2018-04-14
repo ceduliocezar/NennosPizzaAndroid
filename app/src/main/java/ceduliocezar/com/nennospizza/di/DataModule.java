@@ -2,7 +2,14 @@ package ceduliocezar.com.nennospizza.di;
 
 import javax.inject.Named;
 
+import ceduliocezar.com.data.entity.mapper.AppPizzaMapper;
+import ceduliocezar.com.data.entity.mapper.PizzaMapper;
+import ceduliocezar.com.data.internet.AppInternetChecker;
+import ceduliocezar.com.data.internet.InternetChecker;
 import ceduliocezar.com.data.remote.NennosService;
+import ceduliocezar.com.data.repository.datasource.PizzaDataSource;
+import ceduliocezar.com.data.repository.datasource.cloud.CloudPizzaDataSource;
+import ceduliocezar.com.data.repository.datasource.disk.DiskPizzaDataSource;
 import ceduliocezar.com.nennospizza.BuildConfig;
 import dagger.Module;
 import dagger.Provides;
@@ -32,5 +39,27 @@ public class DataModule {
     @Provides
     String providesBaseUrl() {
         return BuildConfig.nennosEndpointUrl;
+    }
+
+    @Provides
+    @Named("disk")
+    PizzaDataSource providesDiskPizzaDataSource(DiskPizzaDataSource diskPizzaDataSource) {
+        return diskPizzaDataSource;
+    }
+
+    @Provides
+    @Named("cloud")
+    PizzaDataSource providesCloudPizzaDataSource(CloudPizzaDataSource cloudPizzaDataSource) {
+        return cloudPizzaDataSource;
+    }
+
+    @Provides
+    InternetChecker providesInternetChecker(AppInternetChecker appInternetChecker) {
+        return appInternetChecker;
+    }
+
+    @Provides
+    PizzaMapper providesPizzaMapper(AppPizzaMapper appPizzaMapper) {
+        return appPizzaMapper;
     }
 }

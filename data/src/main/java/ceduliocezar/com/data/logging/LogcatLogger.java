@@ -37,4 +37,9 @@ public class LogcatLogger implements Logger {
     public void error(String tag, String message) {
         Log.e(tag, message);
     }
+
+    @Override
+    public void error(String tag, Throwable t) {
+        Log.e(tag, Log.getStackTraceString(t));
+    }
 }

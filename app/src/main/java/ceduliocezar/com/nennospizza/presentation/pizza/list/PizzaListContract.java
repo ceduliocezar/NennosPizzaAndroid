@@ -24,8 +24,10 @@ public class PizzaListContract {
 
         /**
          * Shows pizza details screen pizza.
+         *
+         * @param pizzaModel - pizza model to be shown
          */
-        void showDetailPizzaScreen();
+        void showDetailPizzaScreen(PizzaModel pizzaModel);
 
         /**
          * Displays the num of items add to cart.

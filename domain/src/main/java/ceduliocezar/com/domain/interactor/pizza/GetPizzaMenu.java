@@ -17,13 +17,13 @@ import io.reactivex.Observable;
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class GetPizzaList extends UseCase<List<Pizza>, Void> {
+public class GetPizzaMenu extends UseCase<List<Pizza>, Void> {
 
-    private static final String TAG = "GetPizzaList";
+    private static final String TAG = "GetPizzaMenu";
     private PizzaRepository pizzaRepository;
 
     @Inject
-    public GetPizzaList(ThreadExecutor threadExecutor,
+    public GetPizzaMenu(ThreadExecutor threadExecutor,
                         PostExecutionThread postExecutionThread,
                         Logger logger,
                         PizzaRepository pizzaRepository) {

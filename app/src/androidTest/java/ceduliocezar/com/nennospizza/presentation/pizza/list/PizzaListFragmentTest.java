@@ -61,6 +61,10 @@ public class PizzaListFragmentTest {
 
     private ArgumentCaptor<PizzaListContract.View> viewArgumentCaptor;
 
+    @Inject
+    @SuppressWarnings("unused")
+    private PizzaModel pizzaModel;
+
 
     @Before
     public void setUp() {
@@ -79,7 +83,7 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_showPizzas() {
+    public void test_showPizzas() throws Throwable {
 
         final List<PizzaModel> pizzas = new ArrayList<>();
 
@@ -134,7 +138,7 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_addPizzaToCart() {
+    public void test_addPizzaToCart() throws Throwable {
 
 
         final List<PizzaModel> pizzas = new ArrayList<>();
@@ -167,7 +171,7 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_showCreateCustomPizzaScreen() {
+    public void test_showCreateCustomPizzaScreen() throws Throwable {
 
         verify(presenter).setView(viewArgumentCaptor.capture());
 
@@ -183,14 +187,14 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_showDetailPizzaScreen() {
+    public void test_showDetailPizzaScreen() throws Throwable {
 
         verify(presenter).setView(viewArgumentCaptor.capture());
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                viewArgumentCaptor.getValue().showDetailPizzaScreen();
+                viewArgumentCaptor.getValue().showDetailPizzaScreen(pizzaModel);
             }
         });
 
@@ -199,7 +203,7 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_showItemsInCart() {
+    public void test_showItemsInCart() throws Throwable {
 
         verify(presenter).setView(viewArgumentCaptor.capture());
 
@@ -214,7 +218,7 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_showItemsNoItemInCart() {
+    public void test_showItemsNoItemInCart() throws Throwable {
 
         verify(presenter).setView(viewArgumentCaptor.capture());
 
@@ -228,7 +232,7 @@ public class PizzaListFragmentTest {
         onView(withId(R.id.badge)).check(matches(nullDrawable()));
     }
 
-    private void runOnUiThread(Runnable runnable) {
-        activityTestRule.getActivity().runOnUiThread(runnable);
+    private void runOnUiThread(Runnable runnable) throws Throwable {
+        activityTestRule.runOnUiThread(runnable);
     }
 }

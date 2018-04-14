@@ -15,4 +15,6 @@ public interface Logger {
 
     void error(String tag, String message);
 
+    void error(String tag, Throwable e);
+
 }
