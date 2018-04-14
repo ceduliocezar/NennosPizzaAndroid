@@ -2,8 +2,6 @@ package ceduliocezar.com.nennospizza;
 
 import ceduliocezar.com.nennospizza.di.AppComponent;
 import ceduliocezar.com.nennospizza.di.DaggerTestComponent;
-import ceduliocezar.com.nennospizza.di.DataModule;
-import ceduliocezar.com.nennospizza.di.DomainModule;
 import ceduliocezar.com.nennospizza.di.MockPresentationModule;
 
 
@@ -17,8 +15,6 @@ public class MockApplication extends CustomApplication {
     AppComponent createComponent() {
         return DaggerTestComponent.builder()
                 .mockPresentationModule(new MockPresentationModule())
-                .dataModule(new DataModule())
-                .domainModule(new DomainModule())
                 .build();
     }
 }

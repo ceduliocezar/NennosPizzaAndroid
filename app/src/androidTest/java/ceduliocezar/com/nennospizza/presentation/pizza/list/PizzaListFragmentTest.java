@@ -26,6 +26,7 @@ import ceduliocezar.com.nennospizza.MockApplication;
 import ceduliocezar.com.nennospizza.R;
 import ceduliocezar.com.nennospizza.di.TestComponent;
 import ceduliocezar.com.nennospizza.navigation.Navigator;
+import ceduliocezar.com.nennospizza.presentation.pizza.PizzaPresentationMapper;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -63,8 +64,10 @@ public class PizzaListFragmentTest {
 
     @Inject
     @SuppressWarnings("unused")
-    private PizzaModel pizzaModel;
+    PizzaModel pizzaModel;
 
+    @Inject
+    PizzaPresentationMapper pizzaPresentationMapper;
 
     @Before
     public void setUp() {
