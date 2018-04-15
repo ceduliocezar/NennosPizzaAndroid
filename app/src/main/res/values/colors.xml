@@ -10,4 +10,5 @@
     <color name="cart_item_price_color">#8B000000</color>
     <color name="checkout_button_color">#FFE14D45</color>
     <color name="checkout_bt_text_color">#FFFFFFFF</color>
+    <color name="loader_background">#FFFFFF</color>
 </resources>

@@ -149,16 +149,13 @@ public class CartPresenter implements CartContract.Presenter {
             @Override
             public void onNext(Void aVoid) {
                 logger.debug(TAG, "onClickCheckout: onNext");
-                if (hasViewAttached()) {
-                    view.navigateToAfterCheckoutScreen();
-                    view.finishCurrentScreen();
-                }
             }
 
             @Override
             public void onError(Throwable e) {
-                logger.error(TAG, "onClickCheckout: onError");
+                logger.error(TAG, e);
                 if (hasViewAttached()) {
+                    view.hideLoadingCheckout();
                     view.showErrorOnCheckout();
                 }
             }
@@ -168,6 +165,7 @@ public class CartPresenter implements CartContract.Presenter {
                 logger.debug(TAG, "onClickCheckout: onComplete");
                 if (hasViewAttached()) {
                     view.hideLoadingCheckout();
+                    view.navigateToAfterCheckoutScreen();
                 }
 
             }

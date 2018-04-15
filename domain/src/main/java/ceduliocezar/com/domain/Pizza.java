@@ -66,4 +66,14 @@ public class Pizza {
                 ", basePrice=" + basePrice +
                 '}';
     }
+
+    public double getTotalPrice() {
+
+        double price = basePrice;
+
+        for (Ingredient ingredient : ingredients) {
+            price += ingredient.getPrice();
+        }
+        return price;
+    }
 }

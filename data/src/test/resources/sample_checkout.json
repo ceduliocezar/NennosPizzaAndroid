@@ -1,0 +1,36 @@
+{
+  "pizzas": [
+    {
+      "name": "Pizza1",
+      "ingredients": [
+        1,
+        2,
+        3
+      ],
+      "imageUrl": "www1.google.com"
+    },
+    {
+      "name": "Pizza2",
+      "ingredients": [
+        4,
+        5,
+        6
+      ],
+      "imageUrl": "www2.google.com"
+    },
+    {
+      "name": "Pizza3",
+      "ingredients": [
+        7,
+        8,
+        9
+      ],
+      "imageUrl": "www3.google.com"
+    }
+  ],
+  "drinks": [
+    1,
+    2,
+    3
+  ]
+}

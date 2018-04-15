@@ -11,7 +11,7 @@ import retrofit2.http.GET;
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public interface NennosService {
+public interface MenuService {
 
     @GET("dokm7/")
     Observable<PizzasTO> listPizzas();

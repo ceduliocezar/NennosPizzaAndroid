@@ -48,7 +48,8 @@ recycler view item doesnt match the parent width, possibily a implementation bug
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/loader_background">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/loader"
