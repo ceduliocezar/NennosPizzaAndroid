@@ -24,7 +24,6 @@ ext {
     androidSupportLibraryVersion = '27.1.0'
     constraintLayoutVersion = '1.0.2'
     gsonVersion = '2.8.2'
-    recyclerViewVersion = '21.0.+'
     glideVersion = '4.6.1'
     badgeVersion = '2.0'
 
@@ -52,7 +51,7 @@ ext {
             supportDesign:          "com.android.support:design:${androidSupportLibraryVersion}",
             retrofit:               "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             retrofitRxjava2:        "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            recyclerView:           "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            recyclerView:           "com.android.support:recyclerview-v7:${androidSupportLibraryVersion}",
             glide:                  "com.github.bumptech.glide:glide:${glideVersion}",
             glideCompiler:          "com.github.bumptech.glide:compiler:${glideVersion}",
             badge:                  "com.github.nekocode:Badge:${badgeVersion}",

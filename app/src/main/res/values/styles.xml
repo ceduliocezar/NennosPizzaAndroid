@@ -24,4 +24,16 @@
         <item name="actionMenuTextColor">@color/colorAccent</item>
     </style>
 
+    <style name="BottomButton" parent="AppTheme">
+        <item name="android:background">@color/bottom_button_color</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/bottom_bt_text_color</item>
+        <item name="android:textSize">@dimen/bottom_button_text_size</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
 </resources>

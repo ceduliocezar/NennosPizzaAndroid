@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ceduliocezar.com.data.entity.PizzaEntity;
-import ceduliocezar.com.data.remote.NennosService;
+import ceduliocezar.com.data.remote.MenuService;
 import ceduliocezar.com.domain.logging.Logger;
 import io.reactivex.Observable;
 import io.reactivex.functions.Predicate;
@@ -30,7 +30,7 @@ public class CloudPizzaDataSourceTest {
 
 
     @Mock
-    private NennosService nennosService;
+    private MenuService menuService;
 
     @Mock
     @SuppressWarnings("unused")
@@ -46,7 +46,7 @@ public class CloudPizzaDataSourceTest {
         pizzas.add(new PizzaEntity("pizza2", Arrays.asList(10L, 20L), "fakeURL"));
         pizzas.add(new PizzaEntity("pizza3", Arrays.asList(10L, 20L), "fakeURL"));
 
-        when(nennosService.listPizzas()).thenReturn(Observable.just(pizzaTO));
+        when(menuService.listPizzas()).thenReturn(Observable.just(pizzaTO));
         when(pizzaTO.getPizzas()).thenReturn(pizzas);
         when(pizzaTO.getBasePrice()).thenReturn(33.0d);
 

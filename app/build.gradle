@@ -15,7 +15,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "ceduliocezar.com.nennospizza.MockTestRunner"
 
-        buildConfigField "String", "nennosEndpointUrl", "\"https://api.myjson.com/bins/\""
+        buildConfigField "String", "menuServiceUrl", "\"https://api.myjson.com/bins/\""
+        buildConfigField "String", "checkoutServiceUrl", "\"http://httpbin.org/\""
         // should read from gradle param or system env var, however hardcoded to ease the build for whom may concern
     }
     buildTypes {

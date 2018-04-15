@@ -6,6 +6,9 @@ import ceduliocezar.com.domain.Ingredient;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * Manipulates information about {@link Ingredient}
+ */
 public interface IngredientRepository {
 
     Observable<List<Ingredient>> list();

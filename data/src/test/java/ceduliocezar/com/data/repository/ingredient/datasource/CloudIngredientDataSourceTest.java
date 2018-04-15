@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ceduliocezar.com.data.entity.IngredientEntity;
-import ceduliocezar.com.data.remote.NennosService;
+import ceduliocezar.com.data.remote.MenuService;
 import ceduliocezar.com.domain.logging.Logger;
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
@@ -32,7 +32,7 @@ public class CloudIngredientDataSourceTest {
     CloudIngredientDataSource cloudIngredientDataSource;
 
     @Mock
-    private NennosService nennosService;
+    private MenuService menuService;
 
     @Mock
     private Logger logger;
@@ -49,12 +49,12 @@ public class CloudIngredientDataSourceTest {
         ingredientEntities.add(ingredient);
 
 
-        when(nennosService.listIngredient()).thenReturn(Observable.just(ingredientEntities));
+        when(menuService.listIngredient()).thenReturn(Observable.just(ingredientEntities));
 
         TestObserver<List<IngredientEntity>> observer = cloudIngredientDataSource.ingredientList().test();
 
         observer.awaitTerminalEvent();
 
-        verify(nennosService).listIngredient();
+        verify(menuService).listIngredient();
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ceduliocezar.com.data.entity.PizzaEntity;
-import ceduliocezar.com.data.remote.NennosService;
+import ceduliocezar.com.data.remote.MenuService;
 import ceduliocezar.com.data.repository.pizza.PizzaDataSource;
 import ceduliocezar.com.domain.logging.Logger;
 import io.reactivex.Observable;
@@ -19,19 +19,19 @@ import io.reactivex.functions.Function;
 public class CloudPizzaDataSource implements PizzaDataSource {
     private static final String TAG = "CloudPizzaDataSource";
 
-    private NennosService nennosService;
+    private MenuService menuService;
     private Logger logger;
 
     @Inject
-    public CloudPizzaDataSource(NennosService nennosService, Logger logger) {
-        this.nennosService = nennosService;
+    public CloudPizzaDataSource(MenuService menuService, Logger logger) {
+        this.menuService = menuService;
         this.logger = logger;
     }
 
     @Override
     public Observable<List<PizzaEntity>> listPizza() {
         logger.debug(TAG, "listPizza");
-        return nennosService.listPizzas()
+        return menuService.listPizzas()
                 .map(new Function<PizzasTO, List<PizzaEntity>>() {
                     @Override
                     public List<PizzaEntity> apply(PizzasTO pizzasTO) {

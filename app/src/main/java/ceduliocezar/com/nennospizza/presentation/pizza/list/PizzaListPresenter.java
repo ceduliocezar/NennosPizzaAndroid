@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.cart.AddPizzaToCart;
+import ceduliocezar.com.domain.interactor.cart.GetNumOfItemsOnCart;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaByName;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaMenu;
 import ceduliocezar.com.domain.logging.Logger;
@@ -29,17 +30,19 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
     private GetPizzaMenu getPizzaMenu;
     private PizzaPresentationMapper pizzaPresentationMapper;
     private GetPizzaByName getPizzaByName;
+    private GetNumOfItemsOnCart getNumOfItemsOnCart;
 
     @Inject
     public PizzaListPresenter(Logger logger,
                               AddPizzaToCart addPizzaToCart,
                               GetPizzaMenu getPizzaMenu,
-                              PizzaPresentationMapper pizzaPresentationMapper, GetPizzaByName getPizzaByName) {
+                              PizzaPresentationMapper pizzaPresentationMapper, GetPizzaByName getPizzaByName, GetNumOfItemsOnCart getNumOfItemsOnCart) {
         this.logger = logger;
         this.addPizzaToCart = addPizzaToCart;
         this.getPizzaMenu = getPizzaMenu;
         this.pizzaPresentationMapper = pizzaPresentationMapper;
         this.getPizzaByName = getPizzaByName;
+        this.getNumOfItemsOnCart = getNumOfItemsOnCart;
     }
 
     @Override
@@ -57,7 +60,31 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
         }
 
         loadPizzaList();
+        loadNumItemsOnCart();
+    }
 
+    void loadNumItemsOnCart() {
+        logger.debug(TAG, "loadNumItemsOnCart");
+
+        getNumOfItemsOnCart.execute(new DisposableObserver<Integer>() {
+            @Override
+            public void onNext(Integer integer) {
+                logger.debug(TAG, "onNext");
+                if (hasViewAttached()) {
+                    showNumOfItemsInCart(integer);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                logger.error(TAG, e);
+            }
+
+            @Override
+            public void onComplete() {
+                logger.debug(TAG, "onComplete");
+            }
+        }, null);
     }
 
     void loadPizzaList() {
@@ -111,6 +138,12 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
         addPizzaToCart(pizzaModel);
     }
 
+    @Override
+    public void viewResumed() {
+        logger.debug(TAG, "viewResumed");
+        loadNumItemsOnCart();
+    }
+
     void addPizzaToCart(PizzaModel pizzaModel) {
         logger.debug(TAG, "addPizzaToCart: ");
 
@@ -122,11 +155,7 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
                     public void onNext(Integer numItemsOnCart) {
                         logger.debug(TAG, "addPizzaToCart: onNext: numItemsOnCart:" + numItemsOnCart);
                         if (hasViewAttached()) {
-                            if (numItemsOnCart > 0) {
-                                view.showCartNotification(numItemsOnCart);
-                            } else {
-                                view.hideCartNotification();
-                            }
+                            showNumOfItemsInCart(numItemsOnCart);
                         }
                     }
 
@@ -152,6 +181,14 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
 
             }
         }, pizzaModel.getName());
+    }
+
+    private void showNumOfItemsInCart(Integer numItemsOnCart) {
+        if (numItemsOnCart > 0) {
+            view.showCartNotification(numItemsOnCart);
+        } else {
+            view.hideCartNotification();
+        }
     }
 
     private boolean hasViewAttached() {

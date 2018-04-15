@@ -2,6 +2,8 @@ package ceduliocezar.com.nennospizza.di;
 
 import javax.inject.Singleton;
 
+import ceduliocezar.com.nennospizza.presentation.cart.CartFragment;
+import ceduliocezar.com.nennospizza.presentation.checkout.AfterCheckoutActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListFragment;
 import dagger.Component;
 
@@ -15,4 +17,8 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(PizzaListFragment pizzaListFragment);
+
+    void inject(CartFragment cartFragment);
+
+    void inject(AfterCheckoutActivity afterCheckoutActivity);
 }
