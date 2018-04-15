@@ -1,25 +1,24 @@
 package ceduliocezar.com.nennospizza.presentation.pizza.list;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by cedulio.silva on 4/12/2018.
  */
 
-public class PizzaModel {
+public class PizzaModel implements Serializable {
 
-    private String id;
+
     private String name;
     private List<String> ingredients;
     private double totalPrice;
     private String imageUrl;
 
 
-    public PizzaModel(String id,
-                      String name,
+    public PizzaModel(String name,
                       List<String> ingredients,
                       double totalPrice, String imageUrl) {
-        this.id = id;
         this.name = name;
         this.ingredients = ingredients;
         this.totalPrice = totalPrice;
@@ -50,9 +49,6 @@ public class PizzaModel {
         this.totalPrice = totalPrice;
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -61,7 +57,6 @@ public class PizzaModel {
     @Override
     public String toString() {
         return "PizzaModel{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", ingredients=" + ingredients +
                 ", totalPrice=" + totalPrice +

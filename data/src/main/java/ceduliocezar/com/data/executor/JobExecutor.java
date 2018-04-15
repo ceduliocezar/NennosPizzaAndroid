@@ -18,7 +18,7 @@ public class JobExecutor implements ThreadExecutor {
     private final ThreadPoolExecutor threadPoolExecutor;
 
     @Inject
-    public JobExecutor() {
+    JobExecutor() {
         this.threadPoolExecutor = new ThreadPoolExecutor(3,
                 5,
                 10,

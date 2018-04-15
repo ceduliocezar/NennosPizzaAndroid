@@ -2,7 +2,8 @@ package ceduliocezar.com.data.remote;
 
 import java.util.List;
 
-import ceduliocezar.com.data.entity.PizzaEntity;
+import ceduliocezar.com.data.entity.IngredientEntity;
+import ceduliocezar.com.data.repository.pizza.datasource.cloud.PizzasTO;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
@@ -12,7 +13,10 @@ import retrofit2.http.GET;
 
 public interface NennosService {
 
-    @GET("/dokm7")
-    Observable<List<PizzaEntity>> listPizzas();
+    @GET("dokm7/")
+    Observable<PizzasTO> listPizzas();
+
+    @GET("ozt3z/")
+    Observable<List<IngredientEntity>> listIngredient();
 
 }

@@ -15,6 +15,7 @@ import java.util.List;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.cart.AddPizzaToCart;
+import ceduliocezar.com.domain.interactor.pizza.GetPizzaByName;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaMenu;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.presentation.pizza.PizzaPresentationMapper;
@@ -23,6 +24,7 @@ import io.reactivex.observers.DisposableObserver;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -53,7 +55,10 @@ public class PizzaListPresenterTest {
     private AddPizzaToCart addPizzaToCart;
 
     @Captor
-    private ArgumentCaptor<DisposableObserver<Integer>> disposablePizzaCaptor;
+    private ArgumentCaptor<DisposableObserver<Integer>> disposableAddPizzaCaptor;
+
+    @Captor
+    private ArgumentCaptor<DisposableObserver<Pizza>> disposableGetPizzaByNameCaptor;
 
     @Mock
     private Throwable throwable;
@@ -69,6 +74,9 @@ public class PizzaListPresenterTest {
 
     @Mock
     private PizzaPresentationMapper pizzaPresentationMapper;
+
+    @Mock
+    private GetPizzaByName getPizzaByName;
 
     @Test
     public void test_setView() {
@@ -97,55 +105,59 @@ public class PizzaListPresenterTest {
     @Test
     public void test_userSelectedAddPizzaToCart() {
 
-        when(pizzaModel.getId()).thenReturn("id");
-
+        when(pizzaModel.getName()).thenReturn("pizza");
         pizzaListPresenter.setView(view);
         pizzaListPresenter.userSelectedAddPizzaToCart(pizzaModel);
 
-        verify(addPizzaToCart).execute(any(DisposableObserver.class), eq("id"));
+        verify(getPizzaByName).execute(any(DisposableObserver.class), eq("pizza"));
     }
 
     @Test
     public void test_addPizzaToCart() {
 
-        when(pizzaModel.getId()).thenReturn("id");
-
+        when(pizzaModel.getName()).thenReturn("pizzaName");
         pizzaListPresenter.setView(view);
         pizzaListPresenter.addPizzaToCart(pizzaModel);
 
-        verify(addPizzaToCart).execute(disposablePizzaCaptor.capture(), eq("id"));
+        verify(getPizzaByName).execute(disposableGetPizzaByNameCaptor.capture(), anyString());
+        disposableGetPizzaByNameCaptor.getValue().onNext(pizza);
+        disposableGetPizzaByNameCaptor.getValue().onComplete();
+        verify(addPizzaToCart).execute(disposableAddPizzaCaptor.capture(), eq(pizza));
 
-        disposablePizzaCaptor.getValue().onNext(1);
+        disposableAddPizzaCaptor.getValue().onNext(1);
         verify(view).showCartNotification(1);
     }
 
     @Test
     public void test_addPizzaToCartNoItems() {
 
-        when(pizzaModel.getId()).thenReturn("id");
+        when(pizzaModel.getName()).thenReturn("pizzaName");
 
         pizzaListPresenter.setView(view);
         pizzaListPresenter.addPizzaToCart(pizzaModel);
 
-        verify(addPizzaToCart).execute(disposablePizzaCaptor.capture(), eq("id"));
+        verify(getPizzaByName).execute(disposableGetPizzaByNameCaptor.capture(), anyString());
+        disposableGetPizzaByNameCaptor.getValue().onNext(pizza);
+        disposableGetPizzaByNameCaptor.getValue().onComplete();
+        verify(addPizzaToCart).execute(disposableAddPizzaCaptor.capture(), eq(pizza));
 
-        disposablePizzaCaptor.getValue().onNext(0);
-        disposablePizzaCaptor.getValue().onComplete();
+        disposableAddPizzaCaptor.getValue().onNext(0);
+        disposableAddPizzaCaptor.getValue().onComplete();
         verify(view).hideCartNotification();
     }
 
     @Test
     public void test_addPizzaToCartError() {
 
-        when(pizzaModel.getId()).thenReturn("id");
+        when(pizzaModel.getName()).thenReturn("pizzaName");
 
         pizzaListPresenter.setView(view);
         pizzaListPresenter.addPizzaToCart(pizzaModel);
 
-        verify(addPizzaToCart).execute(disposablePizzaCaptor.capture(), eq("id"));
+        verify(getPizzaByName).execute(disposableGetPizzaByNameCaptor.capture(), anyString());
 
-        disposablePizzaCaptor.getValue().onError(throwable);
-        disposablePizzaCaptor.getValue().onComplete();
+        disposableGetPizzaByNameCaptor.getValue().onError(throwable);
+        disposableGetPizzaByNameCaptor.getValue().onComplete();
         verifyZeroInteractions(view);
     }
 

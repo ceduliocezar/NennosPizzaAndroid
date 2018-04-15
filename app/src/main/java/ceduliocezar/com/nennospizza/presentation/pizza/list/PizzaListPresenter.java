@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.cart.AddPizzaToCart;
+import ceduliocezar.com.domain.interactor.pizza.GetPizzaByName;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaMenu;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.presentation.pizza.PizzaPresentationMapper;
@@ -27,16 +28,18 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
     private AddPizzaToCart addPizzaToCart;
     private GetPizzaMenu getPizzaMenu;
     private PizzaPresentationMapper pizzaPresentationMapper;
+    private GetPizzaByName getPizzaByName;
 
     @Inject
     public PizzaListPresenter(Logger logger,
                               AddPizzaToCart addPizzaToCart,
                               GetPizzaMenu getPizzaMenu,
-                              PizzaPresentationMapper pizzaPresentationMapper) {
+                              PizzaPresentationMapper pizzaPresentationMapper, GetPizzaByName getPizzaByName) {
         this.logger = logger;
         this.addPizzaToCart = addPizzaToCart;
         this.getPizzaMenu = getPizzaMenu;
         this.pizzaPresentationMapper = pizzaPresentationMapper;
+        this.getPizzaByName = getPizzaByName;
     }
 
     @Override
@@ -60,6 +63,10 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
     void loadPizzaList() {
         logger.info(TAG, "loadPizzaList: started loading pizzas");
 
+        if (hasViewAttached()) {
+            view.showPizzaLoader();
+        }
+
         getPizzaMenu.execute(new DisposableObserver<List<Pizza>>() {
             @Override
             public void onNext(List<Pizza> pizzas) {
@@ -79,6 +86,7 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
             @Override
             public void onComplete() {
                 logger.info(TAG, "onComplete: finished loading pizzas");
+                view.hidePizzaLoader();
             }
         }, null);
     }
@@ -105,29 +113,45 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
 
     void addPizzaToCart(PizzaModel pizzaModel) {
         logger.debug(TAG, "addPizzaToCart: ");
-        addPizzaToCart.execute(new DisposableObserver<Integer>() {
+
+        getPizzaByName.execute(new DisposableObserver<Pizza>() {
             @Override
-            public void onNext(Integer numItemsOnCart) {
-                logger.debug(TAG, "addPizzaToCart: onNext: numItemsOnCart:" + numItemsOnCart);
-                if (hasViewAttached()) {
-                    if (numItemsOnCart > 0) {
-                        view.showCartNotification(numItemsOnCart);
-                    } else {
-                        view.hideCartNotification();
+            public void onNext(Pizza pizza) {
+                addPizzaToCart.execute(new DisposableObserver<Integer>() {
+                    @Override
+                    public void onNext(Integer numItemsOnCart) {
+                        logger.debug(TAG, "addPizzaToCart: onNext: numItemsOnCart:" + numItemsOnCart);
+                        if (hasViewAttached()) {
+                            if (numItemsOnCart > 0) {
+                                view.showCartNotification(numItemsOnCart);
+                            } else {
+                                view.hideCartNotification();
+                            }
+                        }
                     }
-                }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        logger.error(TAG, e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        logger.info(TAG, "Finish adding pizza to the cart.");
+                    }
+                }, pizza);
             }
 
             @Override
             public void onError(Throwable e) {
-                logger.error(TAG, e);
+
             }
 
             @Override
             public void onComplete() {
-                logger.info(TAG, "Finish adding pizza to the cart.");
+
             }
-        }, pizzaModel.getId());
+        }, pizzaModel.getName());
     }
 
     private boolean hasViewAttached() {

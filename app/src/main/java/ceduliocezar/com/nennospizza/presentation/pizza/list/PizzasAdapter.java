@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,6 +58,15 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
 
         Glide.with(context)
                 .load(pizzaModel.getImageUrl())
+                .into(holder.pizzaImageView);
+
+        Glide.with(context)
+                .load(pizzaModel.getImageUrl())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.custom)
+                        .centerInside()
+                        .dontAnimate()
+                        .dontTransform())
                 .into(holder.pizzaImageView);
 
         holder.addToCartView.setOnClickListener(new View.OnClickListener() {

@@ -9,9 +9,11 @@ import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.presentation.cart.CartActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.create.CreateCustomPizzaActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.detail.PizzaDetailActivity;
+import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaModel;
 
 public class AppNavigator implements Navigator {
     private static final String TAG = "AppNavigator";
+    private static final String PIZZA_PARAM = "PIZZA";
     private Logger logger;
 
     @Inject
@@ -32,8 +34,10 @@ public class AppNavigator implements Navigator {
     }
 
     @Override
-    public void navigateToPizzaDetailScreen(Context context) {
+    public void navigateToPizzaDetailScreen(Context context, PizzaModel pizzaModel) {
         logger.debug(TAG, "navigateToPizzaDetailScreen");
-        context.startActivity(new Intent(context, PizzaDetailActivity.class));
+        Intent intent = new Intent(context, PizzaDetailActivity.class);
+        intent.putExtra(PIZZA_PARAM, pizzaModel);
+        context.startActivity(intent);
     }
 }

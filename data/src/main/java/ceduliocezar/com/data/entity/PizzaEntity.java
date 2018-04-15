@@ -1,5 +1,6 @@
 package ceduliocezar.com.data.entity;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -14,12 +15,15 @@ public class PizzaEntity {
     private String name;
 
     @SerializedName("ingredients")
-    private List<Integer> ingredients;
+    private List<Long> ingredients;
 
     @SerializedName("imageUrl")
     private String imageUrl;
 
-    public PizzaEntity(String name, List<Integer> ingredients, String imageUrl) {
+    @Expose(deserialize = false)
+    private transient double basePrice;
+
+    public PizzaEntity(String name, List<Long> ingredients, String imageUrl) {
         this.name = name;
         this.ingredients = ingredients;
         this.imageUrl = imageUrl;
@@ -29,26 +33,33 @@ public class PizzaEntity {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Integer> getIngredients() {
+    public List<Long> getIngredients() {
         return ingredients;
-    }
-
-    public void setIngredients(List<Integer> ingredients) {
-        this.ingredients = ingredients;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
+    public void setIngredients(List<Long> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public String toString() {
@@ -56,6 +67,7 @@ public class PizzaEntity {
                 "name='" + name + '\'' +
                 ", ingredients=" + ingredients +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", basePrice=" + basePrice +
                 '}';
     }
 }

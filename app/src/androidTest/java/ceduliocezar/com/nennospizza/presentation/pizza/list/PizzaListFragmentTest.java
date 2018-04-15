@@ -2,6 +2,7 @@ package ceduliocezar.com.nennospizza.presentation.pizza.list;
 
 import android.app.Instrumentation;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
@@ -91,8 +92,7 @@ public class PizzaListFragmentTest {
         final List<PizzaModel> pizzas = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            pizzas.add(new PizzaModel("pizza" + i,
-                    "Pizza number " + i,
+            pizzas.add(new PizzaModel("Pizza number " + i,
                     Arrays.asList("Ingredient1", "Ingredient2"),
                     100,
                     Uri.parse("file:///android_asset/place_holder.png").toString()));
@@ -131,7 +131,17 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_selectPizza() {
+    public void test_selectPizza() throws Throwable {
+
+        final List<PizzaModel> pizzaModels = getPizzaModels();
+        verify(presenter).setView(viewArgumentCaptor.capture());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                viewArgumentCaptor.getValue().showPizzas(pizzaModels);
+            }
+        });
 
         onView(withId(R.id.pizza_recycler_view))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -144,15 +154,7 @@ public class PizzaListFragmentTest {
     public void test_addPizzaToCart() throws Throwable {
 
 
-        final List<PizzaModel> pizzas = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++) {
-            pizzas.add(new PizzaModel("pizza" + i,
-                    "Pizza number " + i,
-                    Arrays.asList("Ingredient1", "Ingredient2"),
-                    100,
-                    Uri.parse("file:///android_asset/place_holder.png").toString()));
-        }
+        final List<PizzaModel> pizzas = getPizzaModels();
 
 
         verify(presenter).setView(viewArgumentCaptor.capture());
@@ -171,6 +173,19 @@ public class PizzaListFragmentTest {
 
         verify(presenter).userSelectedAddPizzaToCart(any(PizzaModel.class));
 
+    }
+
+    @NonNull
+    private List<PizzaModel> getPizzaModels() {
+        final List<PizzaModel> pizzas = new ArrayList<>();
+
+        for (int i = 0; i < 1; i++) {
+            pizzas.add(new PizzaModel("Pizza number " + i,
+                    Arrays.asList("Ingredient1", "Ingredient2"),
+                    100,
+                    Uri.parse("file:///android_asset/place_holder.png").toString()));
+        }
+        return pizzas;
     }
 
     @Test
@@ -202,7 +217,7 @@ public class PizzaListFragmentTest {
         });
 
         onView(withId(R.id.pizza_recycler_view)).check(matches(isDisplayed())); // wait ui thread looper
-        verify(navigator).navigateToPizzaDetailScreen(activityTestRule.getActivity());
+        verify(navigator).navigateToPizzaDetailScreen(activityTestRule.getActivity(), pizzaModel);
     }
 
     @Test

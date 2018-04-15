@@ -40,6 +40,10 @@ public class PizzaListContract {
          * Hides cart notification badge.
          */
         void hideCartNotification();
+
+        void showPizzaLoader();
+
+        void hidePizzaLoader();
     }
 
     public interface Presenter {

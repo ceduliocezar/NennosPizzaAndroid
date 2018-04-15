@@ -14,7 +14,7 @@ import ceduliocezar.com.domain.logging.Logger;
 public class LogcatLogger implements Logger {
 
     @Inject
-    public LogcatLogger() {
+    LogcatLogger() {
         // DI constructor
     }
 

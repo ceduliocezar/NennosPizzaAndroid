@@ -36,8 +36,7 @@ public class AppPizzaPresentationMapper implements PizzaPresentationMapper {
                     }
                 }
 
-                PizzaModel pizzaModel = new PizzaModel(pizza.getId(),
-                        pizza.getName(),
+                PizzaModel pizzaModel = new PizzaModel(pizza.getName(),
                         ingredientsString,
                         totalPrice,
                         pizza.getImageUrl());

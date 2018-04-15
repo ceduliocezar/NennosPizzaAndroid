@@ -47,8 +47,6 @@ public class AppPizzaPresentationMapperTest {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredients.add(ingredient);
 
-        when(pizza.getId()).thenReturn("idPizza1");
-        when(pizza2.getId()).thenReturn("idPizza2");
         when(pizza.getName()).thenReturn("pizzaName1");
         when(pizza2.getName()).thenReturn("pizzaName2");
         when(pizza.getBasePrice()).thenReturn(11.0);
@@ -66,12 +64,10 @@ public class AppPizzaPresentationMapperTest {
 
         assertEquals(2, models.size());
 
-        assertEquals("idPizza1", models.get(0).getId());
         assertEquals("pizzaName1", models.get(0).getName());
         assertEquals("fakeUrl1", models.get(0).getImageUrl());
         assertEquals("Ingredient1", models.get(0).getIngredients().get(0));
 
-        assertEquals("idPizza2", models.get(1).getId());
         assertEquals("pizzaName2", models.get(1).getName());
         assertEquals("fakeUrl2", models.get(1).getImageUrl());
         assertTrue(models.get(1).getIngredients().isEmpty());

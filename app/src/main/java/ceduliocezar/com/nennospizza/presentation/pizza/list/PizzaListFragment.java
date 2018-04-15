@@ -2,7 +2,6 @@ package ceduliocezar.com.nennospizza.presentation.pizza.list;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.wang.avi.AVLoadingIndicatorView;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,6 +47,9 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
     @BindView(R.id.pizza_recycler_view)
     RecyclerView recyclerView;
 
+    @BindView(R.id.pizza_loader)
+    AVLoadingIndicatorView loaderView;
+
     private PizzasAdapter pizzasAdapter;
 
     @Nullable
@@ -71,6 +74,7 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
         View view = inflater.inflate(R.layout.fragment_pizza_list, container, false);
         ButterKnife.bind(this, view);
         initRecyclerView();
+
         return view;
     }
 
@@ -81,23 +85,7 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
     }
 
     private void initRecyclerView() {
-        List<PizzaModel> pizzas = new ArrayList<>();
-        List<String> ingredients = new ArrayList<>();
-        ingredients.add("ABCS");
-        ingredients.add("ASDASKK");
-        ingredients.add("dasdds");
-        ingredients.add("Acoroerjdm");
-
-
-        PizzaModel pizzaModel = new PizzaModel("id", "NAmsadasmna Name", ingredients, 25.50, Uri.parse("file:///android_asset/place_holder.png").toString());
-
-        pizzas.add(pizzaModel);
-        pizzas.add(pizzaModel);
-        pizzas.add(pizzaModel);
-        pizzas.add(pizzaModel);
-
         pizzasAdapter = new PizzasAdapter(getActivity());
-        pizzasAdapter.setPizzas(pizzas);
         pizzasAdapter.setOnItemClick(new PizzasAdapter.OnItemClick() {
             @Override
             public void onClickAddToCart(PizzaModel pizzaModel) {
@@ -139,7 +127,7 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
     @Override
     public void showDetailPizzaScreen(PizzaModel pizzaModel) {
         logger.debug(TAG, "showDetailPizzaScreen: ");
-        navigator.navigateToPizzaDetailScreen(getActivity());
+        navigator.navigateToPizzaDetailScreen(getActivity(), pizzaModel);
 
     }
 
@@ -180,6 +168,20 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
             logger.warn(TAG, "hideCartNotification: callback not available");
         }
 
+    }
+
+    @Override
+    public void showPizzaLoader() {
+        logger.debug(TAG, "showPizzaLoader");
+        loaderView.setVisibility(View.VISIBLE);
+        loaderView.show();
+    }
+
+    @Override
+    public void hidePizzaLoader() {
+        logger.debug(TAG, "hidePizzaLoader");
+        loaderView.setVisibility(View.GONE);
+        loaderView.hide();
     }
 
     public void onClickAddCustomPizza() {

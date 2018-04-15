@@ -12,4 +12,6 @@ import io.reactivex.Observable;
 public interface PizzaRepository {
 
     Observable<List<Pizza>> list();
+
+    Observable<Pizza> getPizzaByName(String pizzaName);
 }

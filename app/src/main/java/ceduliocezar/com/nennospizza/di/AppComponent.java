@@ -15,5 +15,4 @@ import dagger.Component;
 public interface AppComponent {
 
     void inject(PizzaListFragment pizzaListFragment);
-
 }

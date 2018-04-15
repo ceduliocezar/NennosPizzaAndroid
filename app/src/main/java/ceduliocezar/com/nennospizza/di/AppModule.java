@@ -36,6 +36,7 @@ public class AppModule {
         return application;
     }
 
+    @Singleton
     @Provides
     @SuppressWarnings("unused")
     public Logger providesAppLogger(LogcatLogger logcatLogger) {
