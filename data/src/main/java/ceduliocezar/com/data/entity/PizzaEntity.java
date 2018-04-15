@@ -20,7 +20,7 @@ public class PizzaEntity {
     @SerializedName("imageUrl")
     private String imageUrl;
 
-    @Expose(deserialize = false)
+    @Expose(deserialize = false, serialize = false)
     private transient double basePrice;
 
     public PizzaEntity(String name, List<Long> ingredients, String imageUrl) {

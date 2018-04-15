@@ -15,6 +15,7 @@ import java.util.List;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.cart.AddPizzaToCart;
+import ceduliocezar.com.domain.interactor.cart.GetNumOfItemsOnCart;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaByName;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaMenu;
 import ceduliocezar.com.domain.logging.Logger;
@@ -77,6 +78,12 @@ public class PizzaListPresenterTest {
 
     @Mock
     private GetPizzaByName getPizzaByName;
+
+    @Mock
+    private GetNumOfItemsOnCart getNumOfItemsOnCart;
+
+    @Captor
+    private ArgumentCaptor<DisposableObserver<Integer>> disposableIntCaptor;
 
     @Test
     public void test_setView() {
@@ -203,6 +210,39 @@ public class PizzaListPresenterTest {
         disposableListCaptor.getValue().onComplete();
 
         verify(view).showPizzas(pizzaModels);
+    }
+
+    @Test
+    public void test_viewResumed() throws Exception {
+        pizzaListPresenter.viewResumed();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+    }
+
+    @Test
+    public void test_loadNumItemsOnCart() throws Exception {
+        pizzaListPresenter.setView(view);
+        pizzaListPresenter.loadNumItemsOnCart();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+
+        disposableIntCaptor.getValue().onNext(10);
+        disposableIntCaptor.getValue().onComplete();
+
+        verify(view).showCartNotification(10);
+    }
+
+    @Test
+    public void test_loadNumItemsOnCartZero() throws Exception {
+        pizzaListPresenter.setView(view);
+        pizzaListPresenter.loadNumItemsOnCart();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+
+        disposableIntCaptor.getValue().onNext(0);
+        disposableIntCaptor.getValue().onComplete();
+
+        verify(view).hideCartNotification();
     }
 
     @Test

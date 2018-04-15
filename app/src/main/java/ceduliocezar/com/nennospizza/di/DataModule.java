@@ -1,12 +1,21 @@
 package ceduliocezar.com.nennospizza.di;
 
-import javax.inject.Named;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import ceduliocezar.com.data.remote.NennosService;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import ceduliocezar.com.data.remote.CheckoutService;
+import ceduliocezar.com.data.remote.MenuService;
+import ceduliocezar.com.data.repository.cart.CartTO;
+import ceduliocezar.com.data.repository.cart.datasource.CartDataSource;
+import ceduliocezar.com.data.repository.cart.datasource.InMemoryCartDataSource;
 import ceduliocezar.com.data.repository.ingredient.IngredientDataSource;
 import ceduliocezar.com.data.repository.ingredient.datasource.CloudIngredientDataSource;
 import ceduliocezar.com.data.repository.pizza.PizzaDataSource;
 import ceduliocezar.com.data.repository.pizza.datasource.cloud.CloudPizzaDataSource;
+import ceduliocezar.com.data.serialization.CartTOSerializer;
 import ceduliocezar.com.nennospizza.BuildConfig;
 import dagger.Module;
 import dagger.Provides;
@@ -23,28 +32,64 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class DataModule {
 
     @Provides
-    NennosService providesNennosService(Retrofit retrofit) {
-        return retrofit.create(NennosService.class);
+    MenuService providesMenuService(@Named("menuService") Retrofit retrofit) {
+        return retrofit.create(MenuService.class);
     }
 
     @Provides
-    Retrofit providesRetrofit(@Named("baseUrl") String baseUrl, GsonConverterFactory factory) {
+    CheckoutService providesCheckoutService(@Named("checkoutService") Retrofit retrofit) {
+        return retrofit.create(CheckoutService.class);
+    }
+
+    @Provides
+    @Named("menuService")
+    Retrofit providesMenuRetrofit(@Named("menuServiceUrl") String url,
+                                  GsonConverterFactory factory) {
+
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(url)
                 .addConverterFactory(factory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
 
     @Provides
-    GsonConverterFactory providesGsonConverterFactory() {
-        return GsonConverterFactory.create();
+    @Named("checkoutService")
+    Retrofit providesCheckoutRetrofit(@Named("checkoutServiceUrl") String url,
+                                      GsonConverterFactory factory) {
+
+        return new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(factory)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
     }
 
-    @Named("baseUrl")
     @Provides
-    String providesBaseUrl() {
-        return BuildConfig.nennosEndpointUrl;
+    GsonConverterFactory providesGsonConverterFactory(CartTOSerializer cartTOSerializer,
+                                                      GsonBuilder gsonBuilder) {
+
+        gsonBuilder.registerTypeAdapter(CartTO.class, cartTOSerializer);
+
+        Gson gson = gsonBuilder.create();
+        return GsonConverterFactory.create(gson);
+    }
+
+    @Provides
+    GsonBuilder providesGsonBuilder() {
+        return new GsonBuilder();
+    }
+
+    @Named("menuServiceUrl")
+    @Provides
+    String providesMenuServiceUrl() {
+        return BuildConfig.menuServiceUrl;
+    }
+
+    @Named("checkoutServiceUrl")
+    @Provides
+    String providesCheckoutServiceUrl() {
+        return BuildConfig.checkoutServiceUrl;
     }
 
     @Provides
@@ -56,5 +101,11 @@ public class DataModule {
     @Provides
     IngredientDataSource providesIngredientDataSource(CloudIngredientDataSource ingredientDataSource) {
         return ingredientDataSource;
+    }
+
+    @Provides
+    @Singleton
+    CartDataSource providesCartDatasource(InMemoryCartDataSource inMemoryCartDataSource) {
+        return inMemoryCartDataSource;
     }
 }

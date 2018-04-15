@@ -5,4 +5,10 @@
     <string name="price_format">$%.0f</string>
     <string name="cart">Cart</string>
     <string name="custom_pizza_tool_bar_title">Custom Pizza</string>
+    <string name="checkout">Checkout</string>
+    <string name="checkout_format">Checkout ($%.0f)</string>
+    <string name="something_went_wrong_checkout">Oops, looks like something went wrong. Please try again soon.</string>
+    <string name="empty_cart_warn">Oops, looks like you don\'t have anything on your cart.</string>
+    <string name="after_checkout_message">Thank you for your order</string>
+    <string name="back_to_home">Back to home</string>
 </resources>

@@ -236,6 +236,13 @@ public class PizzaListFragmentTest {
     }
 
     @Test
+    public void test_callsToPresenter() throws Exception {
+        verify(presenter).setView(viewArgumentCaptor.capture());
+        verify(presenter, times(1)).init();
+        verify(presenter, times(1)).viewResumed();
+    }
+
+    @Test
     public void test_showItemsNoItemInCart() throws Throwable {
 
         verify(presenter).setView(viewArgumentCaptor.capture());

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.presentation.cart.CartActivity;
+import ceduliocezar.com.nennospizza.presentation.checkout.AfterCheckoutActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.create.CreateCustomPizzaActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.detail.PizzaDetailActivity;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaModel;
@@ -38,6 +39,13 @@ public class AppNavigator implements Navigator {
         logger.debug(TAG, "navigateToPizzaDetailScreen");
         Intent intent = new Intent(context, PizzaDetailActivity.class);
         intent.putExtra(PIZZA_PARAM, pizzaModel);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void navigateToAfterCheckoutScreen(Context context) {
+        logger.debug(TAG, "navigateToAfterCheckoutScreen");
+        Intent intent = new Intent(context, AfterCheckoutActivity.class);
         context.startActivity(intent);
     }
 }

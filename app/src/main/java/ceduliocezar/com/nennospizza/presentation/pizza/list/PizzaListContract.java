@@ -78,5 +78,7 @@ public class PizzaListContract {
          * @param pizzaModel - Pizza to be added to cart.
          */
         void userSelectedAddPizzaToCart(PizzaModel pizzaModel);
+
+        void viewResumed();
     }
 }

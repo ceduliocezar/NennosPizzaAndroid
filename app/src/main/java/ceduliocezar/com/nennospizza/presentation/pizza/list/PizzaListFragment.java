@@ -113,6 +113,13 @@ public class PizzaListFragment extends Fragment implements PizzaListContract.Vie
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        logger.debug(TAG, "onResume");
+        presenter.viewResumed();
+    }
+
+    @Override
     public void showPizzas(List<PizzaModel> pizzas) {
         logger.debug(TAG, "showPizzas: " + pizzas.toString());
         pizzasAdapter.setPizzas(pizzas);

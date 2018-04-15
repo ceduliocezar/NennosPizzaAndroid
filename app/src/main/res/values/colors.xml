@@ -6,4 +6,11 @@
     <color name="legend_color">#66000000</color>
     <color name="badge_text_color">#FFFFFF</color>
     <color name="small_cart_button_color">#FFCD2B</color>
+    <color name="cart_item_font_color">#DE000000</color>
+    <color name="cart_item_price_color">#8B000000</color>
+    <color name="bottom_button_color">#FFE14D45</color>
+    <color name="bottom_bt_text_color">#FFFFFFFF</color>
+    <color name="loader_background">#FFFFFF</color>
+    <color name="warn_color">#e14d45</color>
+    <color name="after_checkout_background">#FFF5F5F5</color>
 </resources>
