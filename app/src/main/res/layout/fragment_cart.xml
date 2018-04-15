@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Don't replace this with constraintlayout, its causing a bug that the content of
+recycler view item doesnt match the parent width, possibily a implementation bug of recycler view-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cart_fragment_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ceduliocezar.com.nennospizza.presentation.cart.CartActivity"
+    tools:showIn="@layout/activity_cart">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_item_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/cart_checkout_button"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/cart_checkout_button"
+        tools:listitem="@layout/recycler_cart_item_view" />
+
+    <Button
+        android:id="@+id/cart_checkout_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/checkout_button_color"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:text="@string/checkout"
+        android:textAllCaps="false"
+        android:textColor="@color/checkout_bt_text_color"
+        android:textSize="@dimen/checkout_button_text_size" />
+
+    <FrameLayout
+        android:id="@+id/loading_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/loader"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:indicatorColor="@color/colorAccent"
+            app:indicatorName="BallScaleMultipleIndicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
+</RelativeLayout>

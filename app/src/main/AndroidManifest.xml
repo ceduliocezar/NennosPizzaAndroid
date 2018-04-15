@@ -27,8 +27,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".presentation.cart.CartActivity"
-            android:label="@string/cart" />
-        <activity android:name=".presentation.pizza.detail.PizzaDetailActivity"></activity>
+            android:label="@string/cart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".presentation.pizza.detail.PizzaDetailActivity" />
+        <activity android:name=".presentation.checkout.AfterCheckoutActivity"></activity>
     </application>
 
 </manifest>

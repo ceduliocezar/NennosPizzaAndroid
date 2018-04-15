@@ -2,4 +2,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="pizza_item_height">304dp</dimen>
     <dimen name="pizza_legend_height">125dp</dimen>
+    <dimen name="cart_item_height">56dp</dimen>
+    <dimen name="checkout_button_text_size">16sp</dimen>
 </resources>
