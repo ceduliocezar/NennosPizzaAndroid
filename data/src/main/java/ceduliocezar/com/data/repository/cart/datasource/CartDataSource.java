@@ -40,4 +40,6 @@ public interface CartDataSource {
     Completable checkout();
 
     Single<CartItemEntity> getCartItemById(String id);
+
+    Single<Integer> getNumOfItemsOnCart();
 }

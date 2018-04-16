@@ -269,7 +269,6 @@ public class CartPresenterTest {
         verify(proceedCheckout).execute(voidDisposableCaptor.capture(), ArgumentMatchers.<Void>isNull());
 
         voidDisposableCaptor.getValue().onError(throwable);
-        voidDisposableCaptor.getValue().onComplete();
 
         verify(view).showErrorOnCheckout();
         verify(view).hideLoadingCheckout();

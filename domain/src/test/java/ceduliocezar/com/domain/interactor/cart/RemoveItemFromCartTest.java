@@ -12,10 +12,12 @@ import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.CartRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
+import io.reactivex.Completable;
 import io.reactivex.Scheduler;
 
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Test suite for {@link RemoveItemFromCart}
@@ -52,10 +54,12 @@ public class RemoveItemFromCartTest {
 
     @Test
     public void test_buildUseCaseObservable() {
+        when(repository.removeItemFromCart(cartItem)).thenReturn(Completable.complete());
 
         removeItemFromCart.buildUseCaseObservable(cartItem);
 
         verify(repository, only()).removeItemFromCart(cartItem);
     }
+
 
 }

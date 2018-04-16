@@ -65,8 +65,9 @@ public class InMemoryCartDataSource implements CartDataSource {
             @Override
             public void subscribe(CompletableEmitter emitter) {
                 ListIterator<CartItemEntity> iterator = cart.listIterator();
+                String id = cartItemEntity.getId();
                 while (iterator.hasNext()) {
-                    if (iterator.next().getId().equals(cartItemEntity.getId())) {
+                    if (iterator.next().getId().equals(id)) {
                         iterator.remove();
                         break;
                     }
@@ -100,6 +101,7 @@ public class InMemoryCartDataSource implements CartDataSource {
                 for (CartItemEntity entity : cart) {
                     if (entity.getId().equals(id)) {
                         cartItemEntity = entity;
+                        break;
                     }
                 }
 
@@ -108,6 +110,17 @@ public class InMemoryCartDataSource implements CartDataSource {
                 } else {
                     emitter.onError(new RuntimeException("Cart Item not found"));
                 }
+            }
+        });
+    }
+
+    @Override
+    public Single<Integer> getNumOfItemsOnCart() {
+        logger.debug(TAG, "getNumOfItemsOnCart");
+        return Single.create(new SingleOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(SingleEmitter<Integer> emitter) throws Exception {
+                emitter.onSuccess(cart.size());
             }
         });
     }

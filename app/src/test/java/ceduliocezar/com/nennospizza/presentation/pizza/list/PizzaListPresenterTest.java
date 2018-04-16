@@ -15,6 +15,7 @@ import java.util.List;
 
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.interactor.cart.AddPizzaToCart;
+import ceduliocezar.com.domain.interactor.cart.GetNumOfItemsOnCart;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaByName;
 import ceduliocezar.com.domain.interactor.pizza.GetPizzaMenu;
 import ceduliocezar.com.domain.logging.Logger;
@@ -77,6 +78,9 @@ public class PizzaListPresenterTest {
 
     @Mock
     private GetPizzaByName getPizzaByName;
+
+    @Mock
+    private GetNumOfItemsOnCart getNumOfItemsOnCart;
 
     @Test
     public void test_setView() {
@@ -176,6 +180,7 @@ public class PizzaListPresenterTest {
         pizzaListPresenter.init();
 
         verify(getPizzaMenu).execute(any(DisposableObserver.class), ArgumentMatchers.<Void>isNull());
+        verify(getNumOfItemsOnCart).execute(any(DisposableObserver.class), ArgumentMatchers.<Void>isNull());
     }
 
     @Test

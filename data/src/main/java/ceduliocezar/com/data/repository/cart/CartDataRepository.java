@@ -1,7 +1,5 @@
 package ceduliocezar.com.data.repository.cart;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -78,7 +76,7 @@ public class CartDataRepository implements CartRepository {
 
     @Override
     public Single<Integer> addPizzaToCart(Pizza pizza) {
-        Log.d(TAG, "addPizzaToCart: " + pizza.toString());
+        logger.debug(TAG, "addPizzaToCart: " + pizza.toString());
         String uniqueID = UUID.randomUUID().toString();
 
         CartItemEntity cartItemEntity = new CartItemEntity(uniqueID, pizza.getName(), pizza.getTotalPrice());
@@ -94,7 +92,7 @@ public class CartDataRepository implements CartRepository {
 
     @Override
     public Single<CartItem> getCartItemById(String id) {
-        Log.d(TAG, "getCartItemById: " + id);
+        logger.debug(TAG, "getCartItemById: " + id);
         return cartDataSource.getCartItemById(id).map(new Function<CartItemEntity, CartItem>() {
             @Override
             public CartItem apply(CartItemEntity cartItemEntity) throws Exception {
@@ -111,7 +109,14 @@ public class CartDataRepository implements CartRepository {
 
     @Override
     public Completable checkout() {
-        Log.d(TAG, "checkout: ");
+        logger.debug(TAG, "checkout");
         return cartDataSource.checkout();
+    }
+
+    @Override
+    public Single<Integer> getNumOfItemsOnCart() {
+        logger.debug(TAG, "getNumOfItemsOnCart");
+        return cartDataSource
+                .getNumOfItemsOnCart();
     }
 }

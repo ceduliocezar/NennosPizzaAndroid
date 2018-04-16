@@ -5,6 +5,7 @@ import java.util.List;
 import ceduliocezar.com.domain.CartItem;
 import ceduliocezar.com.domain.Pizza;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -21,4 +22,6 @@ public interface CartRepository {
     Single<CartItem> getCartItemById(String id);
 
     Completable checkout();
+
+    Single<Integer> getNumOfItemsOnCart();
 }
