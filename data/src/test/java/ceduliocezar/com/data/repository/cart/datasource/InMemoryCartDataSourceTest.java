@@ -151,4 +151,21 @@ public class InMemoryCartDataSourceTest {
         assertEquals(1L, observer.assertNoErrors().completions());
 
     }
+
+    @Test
+    public void test_getCartTotalPrice() throws Exception {
+
+        inMemoryCartItemDataSource.add(new CartItemEntity(null,null,10.0)).test().awaitTerminalEvent();
+        inMemoryCartItemDataSource.add(new CartItemEntity(null,null,5.0)).test().awaitTerminalEvent();
+        inMemoryCartItemDataSource.add(new CartItemEntity(null,null,5.0)).test().awaitTerminalEvent();
+
+
+        TestObserver<Double> observer = inMemoryCartItemDataSource.getCartTotalPrice().test();
+        observer.assertNoErrors().assertValue(new Predicate<Double>() {
+            @Override
+            public boolean test(Double aDouble) throws Exception {
+                return aDouble == 20.0d;
+            }
+        });
+    }
 }

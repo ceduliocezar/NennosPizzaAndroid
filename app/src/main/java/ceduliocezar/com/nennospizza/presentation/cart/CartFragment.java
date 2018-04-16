@@ -185,8 +185,8 @@ public class CartFragment extends Fragment implements CartContract.View {
     }
 
     @Override
-    public void finishCurrentScreen() {
-        logger.debug(TAG, "finishCurrentScreen");
-        getActivity().finish();
+    public void showTotalPrice(Double price) {
+        logger.debug(TAG, "showTotalPrice: " + price);
+        checkoutButton.setText(String.format(getString(R.string.checkout_format), price));
     }
 }

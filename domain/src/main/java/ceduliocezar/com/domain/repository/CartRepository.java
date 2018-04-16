@@ -24,4 +24,6 @@ public interface CartRepository {
     Completable checkout();
 
     Single<Integer> getNumOfItemsOnCart();
+
+    Single<Double> getCartTotalPrice();
 }

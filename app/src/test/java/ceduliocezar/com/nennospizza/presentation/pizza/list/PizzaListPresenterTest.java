@@ -82,6 +82,9 @@ public class PizzaListPresenterTest {
     @Mock
     private GetNumOfItemsOnCart getNumOfItemsOnCart;
 
+    @Captor
+    private ArgumentCaptor<DisposableObserver<Integer>> disposableIntCaptor;
+
     @Test
     public void test_setView() {
 
@@ -180,7 +183,6 @@ public class PizzaListPresenterTest {
         pizzaListPresenter.init();
 
         verify(getPizzaMenu).execute(any(DisposableObserver.class), ArgumentMatchers.<Void>isNull());
-        verify(getNumOfItemsOnCart).execute(any(DisposableObserver.class), ArgumentMatchers.<Void>isNull());
     }
 
     @Test
@@ -208,6 +210,39 @@ public class PizzaListPresenterTest {
         disposableListCaptor.getValue().onComplete();
 
         verify(view).showPizzas(pizzaModels);
+    }
+
+    @Test
+    public void test_viewResumed() throws Exception {
+        pizzaListPresenter.viewResumed();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+    }
+
+    @Test
+    public void test_loadNumItemsOnCart() throws Exception {
+        pizzaListPresenter.setView(view);
+        pizzaListPresenter.loadNumItemsOnCart();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+
+        disposableIntCaptor.getValue().onNext(10);
+        disposableIntCaptor.getValue().onComplete();
+
+        verify(view).showCartNotification(10);
+    }
+
+    @Test
+    public void test_loadNumItemsOnCartZero() throws Exception {
+        pizzaListPresenter.setView(view);
+        pizzaListPresenter.loadNumItemsOnCart();
+
+        verify(getNumOfItemsOnCart).execute(disposableIntCaptor.capture(), ArgumentMatchers.<Void>isNull());
+
+        disposableIntCaptor.getValue().onNext(0);
+        disposableIntCaptor.getValue().onComplete();
+
+        verify(view).hideCartNotification();
     }
 
     @Test

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import ceduliocezar.com.domain.CartItem;
 import ceduliocezar.com.domain.interactor.cart.GetCartItemById;
 import ceduliocezar.com.domain.interactor.cart.GetCartItems;
+import ceduliocezar.com.domain.interactor.cart.GetCartTotalPrice;
 import ceduliocezar.com.domain.interactor.cart.ProceedCheckout;
 import ceduliocezar.com.domain.interactor.cart.RemoveItemFromCart;
 import ceduliocezar.com.domain.logging.Logger;
@@ -25,19 +26,22 @@ public class CartPresenter implements CartContract.Presenter {
     private RemoveItemFromCart removeItemFromCart;
     private GetCartItemById getCartItemById;
     private ProceedCheckout proceedCheckout;
+    private GetCartTotalPrice getCartTotalPrice;
 
     @Inject
     public CartPresenter(GetCartItems getCartItems,
                          Logger logger,
                          CartItemPresentationMapper mapper,
                          RemoveItemFromCart removeItemFromCart,
-                         GetCartItemById getCartItemById, ProceedCheckout proceedCheckout) {
+                         GetCartItemById getCartItemById,
+                         ProceedCheckout proceedCheckout, GetCartTotalPrice getCartTotalPrice) {
         this.getCartItems = getCartItems;
         this.logger = logger;
         this.mapper = mapper;
         this.removeItemFromCart = removeItemFromCart;
         this.getCartItemById = getCartItemById;
         this.proceedCheckout = proceedCheckout;
+        this.getCartTotalPrice = getCartTotalPrice;
     }
 
     @Override
@@ -53,7 +57,31 @@ public class CartPresenter implements CartContract.Presenter {
         }
 
         loadCartItems();
+        loadTotalPrice();
+    }
 
+    void loadTotalPrice() {
+        logger.debug(TAG, "loadTotalPrice");
+
+        getCartTotalPrice.execute(new DisposableObserver<Double>() {
+            @Override
+            public void onNext(Double price) {
+                logger.debug(TAG, "loadTotalPrice: onNext" + price);
+                if (hasViewAttached()) {
+                    view.showTotalPrice(price);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                logger.error(TAG, e); // not specified what should be done in this casa
+            }
+
+            @Override
+            public void onComplete() {
+                logger.debug(TAG, "loadTotalPrice: onComplete");
+            }
+        }, null);
     }
 
     void loadCartItems() {
@@ -72,7 +100,7 @@ public class CartPresenter implements CartContract.Presenter {
 
             @Override
             public void onError(Throwable e) {
-                logger.error(TAG, e); // not defined in ux what happened when an error occurs, by now just log error
+                logger.error(TAG, e); // not defined in specs what happened when an error occurs, by now just log error
             }
 
             @Override
@@ -81,7 +109,6 @@ public class CartPresenter implements CartContract.Presenter {
                 if (hasViewAttached()) {
                     view.hideLoadingCartItems();
                 }
-
             }
         }, null);
     }

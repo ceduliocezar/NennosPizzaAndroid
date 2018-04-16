@@ -125,6 +125,28 @@ public class InMemoryCartDataSource implements CartDataSource {
         });
     }
 
+    @Override
+    public Single<Double> getCartTotalPrice() {
+        logger.debug(TAG, "getCartTotalPrice");
+        return Single.create(new SingleOnSubscribe<Double>() {
+            @Override
+            public void subscribe(SingleEmitter<Double> emitter) throws Exception {
+                emitter.onSuccess(calculateTotalPreis());
+            }
+        });
+    }
+
+    private Double calculateTotalPreis() {
+
+        double total = 0;
+
+        for (CartItemEntity cartItemEntity : cart) {
+            total += cartItemEntity.getPrice();
+        }
+
+        return total;
+    }
+
     private void newCart() {
         cart = new ArrayList<>();
     }

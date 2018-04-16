@@ -42,4 +42,6 @@ public interface CartDataSource {
     Single<CartItemEntity> getCartItemById(String id);
 
     Single<Integer> getNumOfItemsOnCart();
+
+    Single<Double> getCartTotalPrice();
 }

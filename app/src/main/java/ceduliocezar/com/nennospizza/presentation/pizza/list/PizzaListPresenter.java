@@ -63,7 +63,7 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
         loadNumItemsOnCart();
     }
 
-    private void loadNumItemsOnCart() {
+    void loadNumItemsOnCart() {
         logger.debug(TAG, "loadNumItemsOnCart");
 
         getNumOfItemsOnCart.execute(new DisposableObserver<Integer>() {
@@ -71,7 +71,7 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
             public void onNext(Integer integer) {
                 logger.debug(TAG, "onNext");
                 if (hasViewAttached()) {
-                    view.showCartNotification(integer);
+                    showNumOfItemsInCart(integer);
                 }
             }
 
@@ -138,6 +138,12 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
         addPizzaToCart(pizzaModel);
     }
 
+    @Override
+    public void viewResumed() {
+        logger.debug(TAG, "viewResumed");
+        loadNumItemsOnCart();
+    }
+
     void addPizzaToCart(PizzaModel pizzaModel) {
         logger.debug(TAG, "addPizzaToCart: ");
 
@@ -149,11 +155,7 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
                     public void onNext(Integer numItemsOnCart) {
                         logger.debug(TAG, "addPizzaToCart: onNext: numItemsOnCart:" + numItemsOnCart);
                         if (hasViewAttached()) {
-                            if (numItemsOnCart > 0) {
-                                view.showCartNotification(numItemsOnCart);
-                            } else {
-                                view.hideCartNotification();
-                            }
+                            showNumOfItemsInCart(numItemsOnCart);
                         }
                     }
 
@@ -179,6 +181,14 @@ public class PizzaListPresenter implements PizzaListContract.Presenter {
 
             }
         }, pizzaModel.getName());
+    }
+
+    private void showNumOfItemsInCart(Integer numItemsOnCart) {
+        if (numItemsOnCart > 0) {
+            view.showCartNotification(numItemsOnCart);
+        } else {
+            view.hideCartNotification();
+        }
     }
 
     private boolean hasViewAttached() {

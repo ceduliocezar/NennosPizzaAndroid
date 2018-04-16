@@ -277,4 +277,23 @@ public class CartFragmentTest {
     private void runOnUiThread(Runnable runnable) throws Throwable {
         activityTestRule.runOnUiThread(runnable);
     }
+
+    @Test
+    public void test_showTotalPrice() throws Throwable {
+        verify(presenter).setView(viewArgumentCaptor.capture());
+        verify(presenter, times(1)).init();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                viewArgumentCaptor.getValue().showTotalPrice(33.0d);
+            }
+        });
+
+        String expectedString = String.format(getActivity().getString(R.string.checkout_format), 33.0d);
+
+        onView(withId(R.id.cart_checkout_button))
+                .check(matches(withText(expectedString)));
+    }
 }

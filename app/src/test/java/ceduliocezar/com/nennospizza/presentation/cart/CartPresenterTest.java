@@ -16,6 +16,7 @@ import java.util.List;
 import ceduliocezar.com.domain.CartItem;
 import ceduliocezar.com.domain.interactor.cart.GetCartItemById;
 import ceduliocezar.com.domain.interactor.cart.GetCartItems;
+import ceduliocezar.com.domain.interactor.cart.GetCartTotalPrice;
 import ceduliocezar.com.domain.interactor.cart.ProceedCheckout;
 import ceduliocezar.com.domain.interactor.cart.RemoveItemFromCart;
 import ceduliocezar.com.domain.logging.Logger;
@@ -79,6 +80,12 @@ public class CartPresenterTest {
     @Mock
     private ProceedCheckout proceedCheckout;
 
+    @Mock
+    private GetCartTotalPrice getCartTotalPrice;
+
+    @Captor
+    private ArgumentCaptor<DisposableObserver<Double>> disposableDoubleCaptor;
+
     @Test
     public void test_setView() {
         assertNull(cartPresenter.view);
@@ -95,6 +102,20 @@ public class CartPresenterTest {
 
         verify(logger).warn(anyString(), anyString());
         verify(getCartItems).execute(disposableItemsCaptor.capture(), ArgumentMatchers.<Void>isNull());
+        verify(getCartTotalPrice).execute(disposableDoubleCaptor.capture(), ArgumentMatchers.<Void>isNull());
+    }
+
+    @Test
+    public void test_loadTotalPrice() throws Exception {
+        cartPresenter.setView(view);
+        cartPresenter.loadTotalPrice();
+
+        verify(getCartTotalPrice).execute(disposableDoubleCaptor.capture(), ArgumentMatchers.<Void>isNull());
+
+        disposableDoubleCaptor.getValue().onNext(10.0d);
+        disposableDoubleCaptor.getValue().onComplete();
+
+        verify(view).showTotalPrice(10.0);
     }
 
     @Test

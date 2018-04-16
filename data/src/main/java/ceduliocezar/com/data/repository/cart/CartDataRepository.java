@@ -119,4 +119,9 @@ public class CartDataRepository implements CartRepository {
         return cartDataSource
                 .getNumOfItemsOnCart();
     }
+
+    @Override
+    public Single<Double> getCartTotalPrice() {
+        return cartDataSource.getCartTotalPrice();
+    }
 }

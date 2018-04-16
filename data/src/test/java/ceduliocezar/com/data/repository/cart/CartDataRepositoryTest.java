@@ -248,4 +248,22 @@ public class CartDataRepositoryTest {
 
         assertEquals(1, observer.assertNoErrors().completions());
     }
+
+    @Test
+    public void test_getCartTotalPrice() throws Exception {
+
+        when(dataSource.getCartTotalPrice()).thenReturn(Single.just(10.0d));
+
+        TestObserver<Double> observer = repository.getCartTotalPrice().test();
+
+        observer.awaitTerminalEvent();
+
+        observer.assertNoErrors().assertValue(new Predicate<Double>() {
+            @Override
+            public boolean test(Double aDouble) throws Exception {
+
+                return aDouble == 10.0d;
+            }
+        });
+    }
 }
