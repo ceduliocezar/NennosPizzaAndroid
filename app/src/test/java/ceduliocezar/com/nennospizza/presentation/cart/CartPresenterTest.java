@@ -276,8 +276,9 @@ public class CartPresenterTest {
         voidDisposableCaptor.getValue().onNext(null);
         voidDisposableCaptor.getValue().onComplete();
 
+        verify(view).showLoadingCheckout();
+        verify(view).finishScreen();
         verify(view).navigateToAfterCheckoutScreen();
-        verify(view).hideLoadingCheckout();
     }
 
     @Test

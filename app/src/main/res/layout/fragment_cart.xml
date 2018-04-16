@@ -25,31 +25,52 @@ recycler view item doesnt match the parent width, possibily a implementation bug
         app:layout_constraintBottom_toTopOf="@+id/cart_checkout_button"
         tools:listitem="@layout/recycler_cart_item_view" />
 
+
     <Button
         android:id="@+id/cart_checkout_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        style="@style/BottomButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:background="@color/checkout_button_color"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:text="@string/checkout"
-        android:textAllCaps="false"
-        android:textColor="@color/checkout_bt_text_color"
-        android:textSize="@dimen/checkout_button_text_size" />
+        />
+
+
+    <LinearLayout
+        android:id="@+id/empty_cart_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="80dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_pizza"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/empty_cart_warn"
+            android:textColor="@color/warn_color"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/loading_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/loader_background">
+        android:background="@color/loader_background"
+        android:elevation="5dp">
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/loader"

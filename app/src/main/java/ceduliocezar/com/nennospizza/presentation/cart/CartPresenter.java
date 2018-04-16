@@ -68,7 +68,12 @@ public class CartPresenter implements CartContract.Presenter {
             public void onNext(Double price) {
                 logger.debug(TAG, "loadTotalPrice: onNext" + price);
                 if (hasViewAttached()) {
-                    view.showTotalPrice(price);
+                    if(price > 0){
+                        view.showTotalPrice(price);
+                    }else{
+                        view.hideTotalPrice();
+                    }
+
                 }
             }
 
@@ -94,7 +99,7 @@ public class CartPresenter implements CartContract.Presenter {
             public void onNext(List<CartItem> cartItems) {
                 logger.debug(TAG, "onNext: " + cartItems.toString());
                 if (hasViewAttached()) {
-                    view.showCart(mapper.transform(cartItems));
+                    onLoadCartItems(cartItems);
                 }
             }
 
@@ -111,6 +116,16 @@ public class CartPresenter implements CartContract.Presenter {
                 }
             }
         }, null);
+    }
+
+    private void onLoadCartItems(List<CartItem> cartItems) {
+        logger.debug(TAG, "onLoadCartItems: " + cartItems);
+        view.showCart(mapper.transform(cartItems));
+        if (cartItems.isEmpty()) {
+            view.showEmptyCartMessage();
+        } else {
+            view.hideEmptyCartMessage();
+        }
     }
 
     private boolean hasViewAttached() {
@@ -163,6 +178,8 @@ public class CartPresenter implements CartContract.Presenter {
                 logger.debug(TAG, "removeItemFromCart: onComplete");
                 if (hasViewAttached()) {
                     loadCartItems();
+                    loadTotalPrice();
+
                 }
             }
         }, cartItem);
@@ -191,7 +208,7 @@ public class CartPresenter implements CartContract.Presenter {
             public void onComplete() {
                 logger.debug(TAG, "onClickCheckout: onComplete");
                 if (hasViewAttached()) {
-                    view.hideLoadingCheckout();
+                    view.finishScreen();
                     view.navigateToAfterCheckoutScreen();
                 }
 

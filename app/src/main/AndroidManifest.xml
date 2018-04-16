@@ -30,7 +30,9 @@
             android:label="@string/cart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".presentation.pizza.detail.PizzaDetailActivity" />
-        <activity android:name=".presentation.checkout.AfterCheckoutActivity"></activity>
+        <activity
+            android:name=".presentation.checkout.AfterCheckoutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

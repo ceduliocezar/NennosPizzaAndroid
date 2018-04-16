@@ -26,6 +26,14 @@ public class CartContract {
         void hideLoadingCheckout();
 
         void showTotalPrice(Double price);
+
+        void showEmptyCartMessage();
+
+        void hideEmptyCartMessage();
+
+        void hideTotalPrice();
+
+        void finishScreen();
     }
 
     public interface Presenter {

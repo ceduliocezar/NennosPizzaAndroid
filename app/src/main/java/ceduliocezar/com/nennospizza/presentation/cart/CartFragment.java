@@ -53,6 +53,9 @@ public class CartFragment extends Fragment implements CartContract.View {
     @BindView(R.id.loader)
     AVLoadingIndicatorView avLoadingIndicatorView;
 
+    @BindView(R.id.empty_cart_container)
+    View emptyCartContainer;
+
     private CartItemAdapter cartItemAdapter;
 
 
@@ -150,6 +153,7 @@ public class CartFragment extends Fragment implements CartContract.View {
 
     private void showLoader() {
         loadingContainer.setVisibility(View.VISIBLE);
+        avLoadingIndicatorView.setVisibility(View.VISIBLE);
         avLoadingIndicatorView.show();
     }
 
@@ -161,6 +165,7 @@ public class CartFragment extends Fragment implements CartContract.View {
 
     private void hideLoader() {
         loadingContainer.setVisibility(View.GONE);
+        avLoadingIndicatorView.setVisibility(View.GONE);
         avLoadingIndicatorView.hide();
     }
 
@@ -188,5 +193,30 @@ public class CartFragment extends Fragment implements CartContract.View {
     public void showTotalPrice(Double price) {
         logger.debug(TAG, "showTotalPrice: " + price);
         checkoutButton.setText(String.format(getString(R.string.checkout_format), price));
+        checkoutButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showEmptyCartMessage() {
+        logger.debug(TAG, "showEmptyCartMessage: ");
+        emptyCartContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyCartMessage() {
+        logger.debug(TAG, "hideEmptyCartMessage: ");
+        emptyCartContainer.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideTotalPrice() {
+        logger.debug(TAG, "hideTotalPrice");
+        checkoutButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void finishScreen() {
+        logger.debug(TAG, "finishScreen");
+        getActivity().finish();
     }
 }
