@@ -11,7 +11,13 @@ import ceduliocezar.com.data.remote.MenuService;
 import ceduliocezar.com.data.repository.cart.CartTO;
 import ceduliocezar.com.data.repository.cart.datasource.CartDataSource;
 import ceduliocezar.com.data.repository.cart.datasource.InMemoryCartDataSource;
+import ceduliocezar.com.data.repository.drink.AppDrinkEntityMapper;
+import ceduliocezar.com.data.repository.drink.DrinkEntityMapper;
+import ceduliocezar.com.data.repository.drink.datasource.CloudDrinkDataSource;
+import ceduliocezar.com.data.repository.drink.datasource.DrinkDataSource;
+import ceduliocezar.com.data.repository.ingredient.AppIngredientEntityMapper;
 import ceduliocezar.com.data.repository.ingredient.IngredientDataSource;
+import ceduliocezar.com.data.repository.ingredient.IngredientEntityMapper;
 import ceduliocezar.com.data.repository.ingredient.datasource.CloudIngredientDataSource;
 import ceduliocezar.com.data.repository.pizza.PizzaDataSource;
 import ceduliocezar.com.data.repository.pizza.datasource.cloud.CloudPizzaDataSource;
@@ -104,8 +110,23 @@ public class DataModule {
     }
 
     @Provides
+    DrinkDataSource providesDrinkDataSource(CloudDrinkDataSource drinkDataSource) {
+        return drinkDataSource;
+    }
+
+    @Provides
     @Singleton
     CartDataSource providesCartDatasource(InMemoryCartDataSource inMemoryCartDataSource) {
         return inMemoryCartDataSource;
+    }
+
+    @Provides
+    DrinkEntityMapper providesDrinkEntityMapper(AppDrinkEntityMapper drinkEntityMapper) {
+        return drinkEntityMapper;
+    }
+
+    @Provides
+    IngredientEntityMapper providesEntityMapper(AppIngredientEntityMapper ingredientEntityMapper){
+        return ingredientEntityMapper;
     }
 }

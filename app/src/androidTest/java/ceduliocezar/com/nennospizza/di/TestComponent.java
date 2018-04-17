@@ -4,6 +4,7 @@ package ceduliocezar.com.nennospizza.di;
 import javax.inject.Singleton;
 
 import ceduliocezar.com.nennospizza.presentation.cart.CartFragmentTest;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinkFragmentTest;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListFragmentTest;
 import dagger.Component;
 
@@ -18,4 +19,6 @@ public interface TestComponent extends AppComponent {
     void inject(PizzaListFragmentTest pizzaListFragmentTest);
 
     void inject(CartFragmentTest cartFragmentTest);
+
+    void inject(DrinkFragmentTest drinkFragmentTest);
 }

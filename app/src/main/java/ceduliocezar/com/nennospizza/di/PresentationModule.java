@@ -6,6 +6,10 @@ import ceduliocezar.com.nennospizza.presentation.cart.AppCartItemPresentationMap
 import ceduliocezar.com.nennospizza.presentation.cart.CartContract;
 import ceduliocezar.com.nennospizza.presentation.cart.CartItemPresentationMapper;
 import ceduliocezar.com.nennospizza.presentation.cart.CartPresenter;
+import ceduliocezar.com.nennospizza.presentation.drink.AppDrinkPresentationMapper;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinkPresentationMapper;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinksContract;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinksPresenter;
 import ceduliocezar.com.nennospizza.presentation.pizza.AppPizzaPresentationMapper;
 import ceduliocezar.com.nennospizza.presentation.pizza.PizzaPresentationMapper;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListContract;
@@ -43,6 +47,16 @@ public class PresentationModule {
     @Provides
     public CartContract.Presenter providesCartPresenter(CartPresenter presenter) {
         return presenter;
+    }
+
+    @Provides
+    DrinksContract.Presenter providesPresenterDrinks(DrinksPresenter drinksPresenter) {
+        return drinksPresenter;
+    }
+
+    @Provides
+    public DrinkPresentationMapper providesDrinkPresentationMapper(AppDrinkPresentationMapper drinkPresentationMapper) {
+        return drinkPresentationMapper;
     }
 
 

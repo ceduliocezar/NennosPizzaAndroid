@@ -19,10 +19,10 @@ import ceduliocezar.com.data.entity.PizzaEntity;
 import ceduliocezar.com.data.repository.cart.datasource.CartDataSource;
 import ceduliocezar.com.domain.CartItem;
 import ceduliocezar.com.domain.CartItemType;
+import ceduliocezar.com.domain.Drink;
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.logging.Logger;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
@@ -58,6 +58,9 @@ public class CartDataRepositoryTest {
 
     @Mock
     private Pizza pizza;
+
+    @Mock
+    private Drink drink;
 
     @Test
     public void test_list() {
@@ -250,7 +253,7 @@ public class CartDataRepositoryTest {
     }
 
     @Test
-    public void test_getCartTotalPrice() throws Exception {
+    public void test_getCartTotalPrice() {
 
         when(dataSource.getCartTotalPrice()).thenReturn(Single.just(10.0d));
 
@@ -265,5 +268,17 @@ public class CartDataRepositoryTest {
                 return aDouble == 10.0d;
             }
         });
+    }
+
+    @Test
+    public void test_addDrinkToCart() {
+
+        when(dataSource.add(any(CartItemEntity.class))).thenReturn(Completable.complete());
+
+        TestObserver<Void> observer = repository.addDrinkToCart(drink).test();
+
+        observer.awaitTerminalEvent();
+
+        assertEquals(1, observer.assertNoErrors().completions());
     }
 }

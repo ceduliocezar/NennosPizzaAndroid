@@ -28,11 +28,28 @@
         <activity
             android:name=".presentation.cart.CartActivity"
             android:label="@string/cart"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".presentation.pizza.detail.PizzaDetailActivity" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.pizza.list.PizzaListActivity" />
+        </activity>
+        <activity android:name=".presentation.pizza.detail.PizzaDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.pizza.list.PizzaListActivity" />
+        </activity>
         <activity
             android:name=".presentation.checkout.AfterCheckoutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.drink.DrinkActivity"
+            android:label="@string/drinks"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".presentation.cart.CartActivity" />
+
+        </activity>
     </application>
 
 </manifest>

@@ -34,6 +34,9 @@ public class IngredientDataRepositoryTest {
     @Mock
     private IngredientDataSource ingredientDataSource;
 
+    @Mock
+    private IngredientEntityMapper ingredientEntityMapper;
+
 
     @Mock
     @SuppressWarnings("unused")
@@ -41,10 +44,10 @@ public class IngredientDataRepositoryTest {
 
     @Test
     public void test_ingredientList() {
-        List<IngredientEntity> ingredients = new ArrayList<>();
-        ingredients.add(new IngredientEntity(1L, "ingredient1", 10.0));
-        ingredients.add(new IngredientEntity(2L, "ingredient2", 20.0));
-        when(ingredientDataSource.ingredientList()).thenReturn(Observable.just(ingredients));
+        List<IngredientEntity> ingredientsEntities = new ArrayList<>();
+        final List<Ingredient> ingredients = new ArrayList<>();
+        when(ingredientDataSource.ingredientList()).thenReturn(Observable.just(ingredientsEntities));
+        when(ingredientEntityMapper.transform(ingredientsEntities)).thenReturn(ingredients);
 
         TestObserver<List<Ingredient>> observer = ingredientDataRepository.list().test();
         observer.awaitTerminalEvent();
@@ -53,13 +56,8 @@ public class IngredientDataRepositoryTest {
                 .assertValue(new Predicate<List<Ingredient>>() {
                     @Override
                     public boolean test(List<Ingredient> ingredientList) {
-                        if ((ingredientList.size() != 2)
-                                || (ingredientList.get(0).getId() != 1L)
-                                || (ingredientList.get(1)).getId() != 2L) {
-                            return false;
-                        }
 
-                        return true;
+                        return ingredientList == ingredients;
                     }
                 });
     }
@@ -67,10 +65,11 @@ public class IngredientDataRepositoryTest {
     @Test
     public void test_getIngredientsListById() {
 
-        List<IngredientEntity> ingredients = new ArrayList<>();
-        ingredients.add(new IngredientEntity(10L, "ingredient1", 10.0));
-        ingredients.add(new IngredientEntity(20L, "ingredient2", 20.0));
-        when(ingredientDataSource.ingredientList()).thenReturn(Observable.just(ingredients));
+        List<IngredientEntity> ingredientsEntities = new ArrayList<>();
+        final List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(new Ingredient(10L, null, 10.0d));
+        when(ingredientDataSource.ingredientList()).thenReturn(Observable.just(ingredientsEntities));
+        when(ingredientEntityMapper.transform(ingredientsEntities)).thenReturn(ingredients);
 
         TestObserver<List<Ingredient>> observer = ingredientDataRepository.getIngredientsListById(Arrays.asList(10L, 40L, 50L)).test();
         observer.awaitTerminalEvent();
@@ -79,14 +78,10 @@ public class IngredientDataRepositoryTest {
                 .assertValue(new Predicate<List<Ingredient>>() {
                     @Override
                     public boolean test(List<Ingredient> ingredientList) {
-                        if ((ingredientList.size() != 1)
-                                || (ingredientList.get(0).getId() != 10L)) {
-                            return false;
-                        }
-
-                        return true;
+                        return ingredientList.size() == 1 && ingredientList.get(0).getId() == 10L;
                     }
                 });
 
     }
+
 }

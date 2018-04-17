@@ -8,9 +8,11 @@ import java.util.concurrent.Callable;
 import javax.inject.Inject;
 
 import ceduliocezar.com.data.entity.CartItemEntity;
+import ceduliocezar.com.data.entity.DrinkEntity;
 import ceduliocezar.com.data.repository.cart.datasource.CartDataSource;
 import ceduliocezar.com.domain.CartItem;
 import ceduliocezar.com.domain.CartItemType;
+import ceduliocezar.com.domain.Drink;
 import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.CartRepository;
@@ -123,5 +125,15 @@ public class CartDataRepository implements CartRepository {
     @Override
     public Single<Double> getCartTotalPrice() {
         return cartDataSource.getCartTotalPrice();
+    }
+
+    @Override
+    public Completable addDrinkToCart(Drink drink) {
+        String uniqueID = UUID.randomUUID().toString();
+
+        CartItemEntity cartItemEntity = new CartItemEntity(uniqueID, drink.getName(), drink.getPrice());
+        cartItemEntity.setDrinkEntity(new DrinkEntity(drink.getId(), drink.getName(), drink.getPrice()));
+        return cartDataSource
+                .add(cartItemEntity);
     }
 }

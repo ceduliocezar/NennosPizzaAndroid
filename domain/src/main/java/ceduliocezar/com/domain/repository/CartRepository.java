@@ -3,9 +3,9 @@ package ceduliocezar.com.domain.repository;
 import java.util.List;
 
 import ceduliocezar.com.domain.CartItem;
+import ceduliocezar.com.domain.Drink;
 import ceduliocezar.com.domain.Pizza;
 import io.reactivex.Completable;
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 /**
@@ -26,4 +26,6 @@ public interface CartRepository {
     Single<Integer> getNumOfItemsOnCart();
 
     Single<Double> getCartTotalPrice();
+
+    Completable addDrinkToCart(Drink drink);
 }

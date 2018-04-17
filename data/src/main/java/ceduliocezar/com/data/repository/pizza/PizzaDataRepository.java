@@ -101,7 +101,7 @@ public class PizzaDataRepository implements PizzaRepository {
                                 return pizza;
                             }
                         }
-                        return null;
+                        throw new RuntimeException("Pizza not found");
                     }
                 });
     }

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:text="@string/place_holder"
-        android:textColor="@color/cart_item_font_color"
+        android:textColor="@color/item_title_font_color"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@id/cart_item_delete_iv"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/place_holder"
-        android:textColor="@color/cart_item_price_color"
+        android:textColor="@color/price_color"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/cart_item_title_tv"
         app:layout_constraintTop_toBottomOf="@id/cart_item_title_tv" />

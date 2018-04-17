@@ -1,9 +1,11 @@
 package ceduliocezar.com.nennospizza.di;
 
 import ceduliocezar.com.data.repository.cart.CartDataRepository;
+import ceduliocezar.com.data.repository.drink.DrinkDataRepository;
 import ceduliocezar.com.data.repository.ingredient.IngredientDataRepository;
 import ceduliocezar.com.data.repository.pizza.PizzaDataRepository;
 import ceduliocezar.com.domain.repository.CartRepository;
+import ceduliocezar.com.domain.repository.DrinkRepository;
 import ceduliocezar.com.domain.repository.IngredientRepository;
 import ceduliocezar.com.domain.repository.PizzaRepository;
 import dagger.Module;
@@ -32,4 +34,8 @@ public class DomainModule {
         return cartDataRepository;
     }
 
+    @Provides
+    DrinkRepository providesDrinksRepository(DrinkDataRepository drinkDataRepository) {
+        return drinkDataRepository;
+    }
 }
