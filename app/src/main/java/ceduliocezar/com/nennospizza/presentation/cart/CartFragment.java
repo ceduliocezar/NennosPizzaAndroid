@@ -219,4 +219,9 @@ public class CartFragment extends Fragment implements CartContract.View {
         logger.debug(TAG, "finishScreen");
         getActivity().finish();
     }
+
+    public void onClickDrinks() {
+        logger.debug(TAG, "onClickDrinks");
+        navigator.navigateToDrinksScreen(getActivity());
+    }
 }
