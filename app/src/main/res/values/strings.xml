@@ -11,4 +11,10 @@
     <string name="empty_cart_warn">Oops, looks like you don\'t have anything on your cart.</string>
     <string name="after_checkout_message">Thank you for your order</string>
     <string name="back_to_home">Back to home</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drinks">Drinks</string>
+    <string name="problem_adding_drink_to_cart">Oops, something went wrong adding your drink to cart</string>
+    <string name="add_to_cart">Added to cart</string>
 </resources>

@@ -7,6 +7,8 @@ import ceduliocezar.com.nennospizza.navigation.Navigator;
 import ceduliocezar.com.nennospizza.presentation.cart.CartContract;
 import ceduliocezar.com.nennospizza.presentation.cart.CartItemModel;
 import ceduliocezar.com.nennospizza.presentation.cart.CartItemPresentationMapper;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinkModel;
+import ceduliocezar.com.nennospizza.presentation.drink.DrinksContract;
 import ceduliocezar.com.nennospizza.presentation.pizza.PizzaPresentationMapper;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaListContract;
 import ceduliocezar.com.nennospizza.presentation.pizza.list.PizzaModel;
@@ -68,6 +70,12 @@ public class MockPresentationModule {
 
     @Provides
     @Singleton
+    DrinkModel providesDrinkModel() {
+        return mock(DrinkModel.class);
+    }
+
+    @Provides
+    @Singleton
     CartItemModel provideCartItemModel() {
         return mock(CartItemModel.class);
     }
@@ -77,4 +85,11 @@ public class MockPresentationModule {
     PizzaPresentationMapper providesPizzaPresentationMapper() {
         return mock(PizzaPresentationMapper.class);
     }
+
+    @Provides
+    @Singleton
+    DrinksContract.Presenter providesPresenterDrinks() {
+        return mock(DrinksContract.Presenter.class);
+    }
+
 }

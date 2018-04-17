@@ -13,4 +13,6 @@ public interface Navigator {
     void navigateToPizzaDetailScreen(Context context, PizzaModel pizzaModel);
 
     void navigateToAfterCheckoutScreen(Context context);
+
+    void navigateToDrinksScreen(Context context);
 }

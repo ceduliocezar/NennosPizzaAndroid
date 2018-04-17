@@ -33,6 +33,10 @@
         <activity
             android:name=".presentation.checkout.AfterCheckoutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".presentation.drink.DrinkActivity"
+            android:label="@string/drinks"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
