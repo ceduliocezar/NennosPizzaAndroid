@@ -64,6 +64,7 @@ dependencies {
     compileOnly presentationDependencies.javaxAnnotation
 
     implementation presentationDependencies.avi
+    implementation presentationDependencies.snacky
     implementation presentationDependencies.dagger
     implementation presentationDependencies.daggerGsonConverter
     implementation presentationDependencies.rxJava

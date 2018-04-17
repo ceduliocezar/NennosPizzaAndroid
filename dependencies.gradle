@@ -27,6 +27,7 @@ ext {
     glideVersion = '4.6.1'
     badgeVersion = '2.0'
     avVersion= '2.1.3'
+    snackyVersion = '1.0.3'
 
     //Testing
     jUnitVersion = '4.12'
@@ -38,6 +39,7 @@ ext {
 
 
     presentationDependencies = [
+            snacky:                 "com.github.matecode:Snacky:${snackyVersion}",
             avi:                    "com.wang.avi:library:${avVersion}",
             daggerCompiler:         "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger:                 "com.google.dagger:dagger:${daggerVersion}",

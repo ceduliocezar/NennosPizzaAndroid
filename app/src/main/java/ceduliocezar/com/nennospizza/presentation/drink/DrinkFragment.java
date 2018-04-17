@@ -3,7 +3,6 @@ package ceduliocezar.com.nennospizza.presentation.drink;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +22,7 @@ import butterknife.ButterKnife;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.nennospizza.CustomApplication;
 import ceduliocezar.com.nennospizza.R;
+import de.mateware.snacky.Snacky;
 
 
 public class DrinkFragment extends Fragment implements DrinksContract.View {
@@ -136,13 +136,17 @@ public class DrinkFragment extends Fragment implements DrinksContract.View {
     public void showNotificationDrinkAdded() {
         logger.debug(TAG, "showNotificationDrinkAdded");
 
-        Snackbar snackbar = Snackbar
-                .make(getView(), R.string.add_to_cart, Snackbar.LENGTH_SHORT);
-
-
-        snackbar.setDuration(3000);
-
-        snackbar.show();
+        int colorBackground = getActivity().getResources().getColor(R.color.colorAccent);
+        int textColor = getActivity().getResources().getColor(android.R.color.white);
+        Snacky.builder()
+                .setActivity(getActivity())
+                .centerText()
+                .setText(R.string.add_to_cart)
+                .setBackgroundColor(colorBackground)
+                .setTextColor(textColor)
+                .setDuration(3000)
+                .build()
+                .show();
     }
 
     @Override
