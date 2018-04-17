@@ -20,15 +20,4 @@ public class CreateCustomPizzaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

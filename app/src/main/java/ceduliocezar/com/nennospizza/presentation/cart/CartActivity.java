@@ -3,7 +3,6 @@ package ceduliocezar.com.nennospizza.presentation.cart;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -31,15 +30,5 @@ public class CartActivity extends AppCompatActivity {
     @OnClick(R.id.tool_bar_drinks)
     public void onClickDrinks() {
         cartFragment.onClickDrinks();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            this.finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
