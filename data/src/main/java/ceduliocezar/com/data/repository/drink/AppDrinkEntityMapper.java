@@ -8,6 +8,9 @@ import javax.inject.Inject;
 import ceduliocezar.com.data.entity.DrinkEntity;
 import ceduliocezar.com.domain.Drink;
 
+/**
+ * Data mapper for {@link DrinkEntity}.
+ */
 public class AppDrinkEntityMapper implements DrinkEntityMapper {
 
     @Inject

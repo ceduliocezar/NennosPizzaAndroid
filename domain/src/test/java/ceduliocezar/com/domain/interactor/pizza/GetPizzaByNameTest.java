@@ -1,4 +1,4 @@
-package ceduliocezar.com.domain.interactor.cart;
+package ceduliocezar.com.domain.interactor.pizza;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -7,31 +7,33 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.logging.Logger;
-import ceduliocezar.com.domain.repository.CartRepository;
+import ceduliocezar.com.domain.repository.PizzaRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
-import io.reactivex.Single;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
+import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for {@link GetNumOfItemsOnCart}
- * Created by cedulio.silva on 4/15/2018.
+ * Testsuite for {@link GetPizzaByName}
+ * Created by cedulio.silva on 4/17/2018.
  */
-public class GetNumOfItemsOnCartTest {
-
+public class GetPizzaByNameTest {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
     @InjectMocks
-    private GetNumOfItemsOnCart getNumOfItemsOnCart;
+    private GetPizzaByName getPizzaByName;
 
     @Mock
-    private CartRepository repository;
+    private PizzaRepository pizzaRepository;
 
     @Mock
     @SuppressWarnings("unused")
@@ -49,21 +51,26 @@ public class GetNumOfItemsOnCartTest {
     @SuppressWarnings("unused")
     private Logger logger;
 
+    @Mock
+    private Pizza pizzaMock;
+
 
     @Test
     public void test_buildUseCaseObservable() {
 
-        when(repository.getNumOfItemsOnCart()).thenReturn(Single.just(20));
+        when(pizzaRepository.getPizzaByName("Pizza")).thenReturn(Observable.just(pizzaMock));
 
-        TestObserver<Integer> observer = getNumOfItemsOnCart.buildUseCaseObservable(null).test();
+        TestObserver<Pizza> observer = getPizzaByName.buildUseCaseObservable("Pizza").test();
 
         observer.awaitTerminalEvent();
 
-        observer.assertNoErrors().assertValue(new Predicate<Integer>() {
+        observer.assertNoErrors().assertValue(new Predicate<Pizza>() {
             @Override
-            public boolean test(Integer integer) {
-                return 20 == integer;
+            public boolean test(Pizza pizza) {
+                return pizza == pizzaMock;
             }
         });
     }
+
+
 }

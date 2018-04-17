@@ -26,6 +26,6 @@ public class ProceedCheckout extends UseCase<Void, Void> {
     protected Observable<Void> buildUseCaseObservable(Void aVoid) {
         return cartRepository
                 .checkout()
-                .toObservable();
+                .toObservable(); // todo implement a completable
     }
 }

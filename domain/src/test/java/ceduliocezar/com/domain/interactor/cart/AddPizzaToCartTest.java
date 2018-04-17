@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import ceduliocezar.com.domain.Pizza;
 import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.CartRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
@@ -19,16 +20,15 @@ import io.reactivex.observers.TestObserver;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for {@link GetNumOfItemsOnCart}
- * Created by cedulio.silva on 4/15/2018.
+ * Test suite for {@link AddPizzaToCart}
+ * Created by cedulio.silva on 4/17/2018.
  */
-public class GetNumOfItemsOnCartTest {
-
+public class AddPizzaToCartTest {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
     @InjectMocks
-    private GetNumOfItemsOnCart getNumOfItemsOnCart;
+    private AddPizzaToCart addPizzaToCart;
 
     @Mock
     private CartRepository repository;
@@ -46,24 +46,29 @@ public class GetNumOfItemsOnCartTest {
     private Scheduler scheduler;
 
     @Mock
-    @SuppressWarnings("unused")
+    private Pizza pizzaMock;
+
+    @Mock
     private Logger logger;
 
 
     @Test
     public void test_buildUseCaseObservable() {
 
-        when(repository.getNumOfItemsOnCart()).thenReturn(Single.just(20));
 
-        TestObserver<Integer> observer = getNumOfItemsOnCart.buildUseCaseObservable(null).test();
+        when(repository.addPizzaToCart(pizzaMock)).thenReturn(Single.just(12));
+
+        TestObserver<Integer> observer = addPizzaToCart.buildUseCaseObservable(pizzaMock).test();
 
         observer.awaitTerminalEvent();
 
         observer.assertNoErrors().assertValue(new Predicate<Integer>() {
             @Override
-            public boolean test(Integer integer) {
-                return 20 == integer;
+            public boolean test(Integer integer) throws Exception {
+                return 12 == integer;
             }
         });
     }
+
+
 }

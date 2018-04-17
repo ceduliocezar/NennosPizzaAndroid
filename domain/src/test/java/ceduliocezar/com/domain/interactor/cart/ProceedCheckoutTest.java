@@ -11,24 +11,23 @@ import ceduliocezar.com.domain.logging.Logger;
 import ceduliocezar.com.domain.repository.CartRepository;
 import ceduliocezar.com.domain.threading.PostExecutionThread;
 import ceduliocezar.com.domain.threading.ThreadExecutor;
+import io.reactivex.Completable;
 import io.reactivex.Scheduler;
-import io.reactivex.Single;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
- * Test suite for {@link GetNumOfItemsOnCart}
- * Created by cedulio.silva on 4/15/2018.
+ * Test suite for {@link ProceedCheckout}
+ * Created by cedulio.silva on 4/17/2018.
  */
-public class GetNumOfItemsOnCartTest {
-
+public class ProceedCheckoutTest {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
     @InjectMocks
-    private GetNumOfItemsOnCart getNumOfItemsOnCart;
+    private ProceedCheckout proceedCheckout;
 
     @Mock
     private CartRepository repository;
@@ -53,17 +52,12 @@ public class GetNumOfItemsOnCartTest {
     @Test
     public void test_buildUseCaseObservable() {
 
-        when(repository.getNumOfItemsOnCart()).thenReturn(Single.just(20));
+        when(repository.checkout()).thenReturn(Completable.complete());
 
-        TestObserver<Integer> observer = getNumOfItemsOnCart.buildUseCaseObservable(null).test();
+        TestObserver<Void> observer = proceedCheckout.buildUseCaseObservable(null).test();
 
         observer.awaitTerminalEvent();
 
-        observer.assertNoErrors().assertValue(new Predicate<Integer>() {
-            @Override
-            public boolean test(Integer integer) {
-                return 20 == integer;
-            }
-        });
+        assertEquals(1, observer.assertNoErrors().completions());
     }
 }

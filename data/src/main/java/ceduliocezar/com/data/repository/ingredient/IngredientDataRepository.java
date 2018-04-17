@@ -1,6 +1,5 @@
 package ceduliocezar.com.data.repository.ingredient;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,12 +18,14 @@ public class IngredientDataRepository implements IngredientRepository {
     private static final String TAG = "IngredientDataRepositor";
 
     private IngredientDataSource ingredientDataSource;
+    private IngredientEntityMapper ingredientEntityMapper;
     private Logger logger;
 
     @Inject
     public IngredientDataRepository(IngredientDataSource ingredientDataSource,
-                                    Logger logger) {
+                                    IngredientEntityMapper ingredientEntityMapper, Logger logger) {
         this.ingredientDataSource = ingredientDataSource;
+        this.ingredientEntityMapper = ingredientEntityMapper;
         this.logger = logger;
     }
 
@@ -36,15 +37,7 @@ public class IngredientDataRepository implements IngredientRepository {
                 .map(new Function<List<IngredientEntity>, List<Ingredient>>() {
                     @Override
                     public List<Ingredient> apply(List<IngredientEntity> ingredientEntities) {
-
-                        List<Ingredient> ingredients = new ArrayList<>();
-
-                        for (IngredientEntity ingredientEntity : ingredientEntities) {
-
-                            ingredients.add(new Ingredient(ingredientEntity.getId(), ingredientEntity.getName(), ingredientEntity.getPrice()));
-                        }
-
-                        return ingredients;
+                        return ingredientEntityMapper.transform(ingredientEntities);
                     }
                 });
     }
