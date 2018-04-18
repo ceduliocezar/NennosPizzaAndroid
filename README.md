@@ -55,6 +55,8 @@ gradlew clean connectedAndroidTest
 - Persist cart between app launches.
 - Configure Firebase Test Lab.
 - Configure CircleCI to send code coverage and static code analysis to http://sonarcloud.io/
+- Implement cache of ingredients.
+- Implement cache of pizzas.
 
 ## Contribute
 

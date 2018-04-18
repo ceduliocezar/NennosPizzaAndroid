@@ -25,7 +25,6 @@ public class CartPresenter implements CartContract.Presenter {
     private CartItemPresentationMapper mapper;
     private RemoveItemFromCart removeItemFromCart;
     private GetCartItemById getCartItemById;
-    private ProceedCheckout proceedCheckout;
     private GetCartTotalPrice getCartTotalPrice;
 
     @Inject
@@ -34,13 +33,12 @@ public class CartPresenter implements CartContract.Presenter {
                          CartItemPresentationMapper mapper,
                          RemoveItemFromCart removeItemFromCart,
                          GetCartItemById getCartItemById,
-                         ProceedCheckout proceedCheckout, GetCartTotalPrice getCartTotalPrice) {
+                         GetCartTotalPrice getCartTotalPrice) {
         this.getCartItems = getCartItems;
         this.logger = logger;
         this.mapper = mapper;
         this.removeItemFromCart = removeItemFromCart;
         this.getCartItemById = getCartItemById;
-        this.proceedCheckout = proceedCheckout;
         this.getCartTotalPrice = getCartTotalPrice;
     }
 
@@ -53,11 +51,15 @@ public class CartPresenter implements CartContract.Presenter {
     @Override
     public void init() {
         if (view == null) {
-            logger.warn(TAG, "setView not called properly, this may cause problems during the execution");
+            throw new NullPointerException("view not set properly");
         }
 
-        loadCartItems();
-        loadTotalPrice();
+        if (view.checkoutServiceRunning()) {
+            view.showLoadingCheckout();
+        } else {
+            loadCartItems();
+            loadTotalPrice();
+        }
     }
 
     void loadTotalPrice() {
@@ -68,9 +70,9 @@ public class CartPresenter implements CartContract.Presenter {
             public void onNext(Double price) {
                 logger.debug(TAG, "loadTotalPrice: onNext" + price);
                 if (hasViewAttached()) {
-                    if(price > 0){
+                    if (price > 0) {
                         view.showTotalPrice(price);
-                    }else{
+                    } else {
                         view.hideTotalPrice();
                     }
 
@@ -189,30 +191,12 @@ public class CartPresenter implements CartContract.Presenter {
     public void onClickCheckout() {
         logger.debug(TAG, "onClickCheckout");
         view.showLoadingCheckout();
-        proceedCheckout.execute(new DisposableObserver<Void>() {
-            @Override
-            public void onNext(Void aVoid) {
-                logger.debug(TAG, "onClickCheckout: onNext");
-            }
+        view.startCheckoutService();
+    }
 
-            @Override
-            public void onError(Throwable e) {
-                logger.error(TAG, e);
-                if (hasViewAttached()) {
-                    view.hideLoadingCheckout();
-                    view.showErrorOnCheckout();
-                }
-            }
-
-            @Override
-            public void onComplete() {
-                logger.debug(TAG, "onClickCheckout: onComplete");
-                if (hasViewAttached()) {
-                    view.finishScreen();
-                    view.navigateToAfterCheckoutScreen();
-                }
-
-            }
-        }, null);
+    @Override
+    public void onCheckoutServiceFinished() {
+        logger.debug(TAG, "onCheckoutServiceFinished");
+        view.navigateToAfterCheckoutScreen();
     }
 }

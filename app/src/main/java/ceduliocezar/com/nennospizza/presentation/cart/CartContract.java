@@ -34,6 +34,10 @@ public class CartContract {
         void hideTotalPrice();
 
         void finishScreen();
+
+        boolean checkoutServiceRunning();
+
+        void startCheckoutService();
     }
 
     public interface Presenter {
@@ -46,5 +50,7 @@ public class CartContract {
         void onClickDeleteItemFromCart(CartItemModel cartItemModel);
 
         void onClickCheckout();
+
+        void onCheckoutServiceFinished();
     }
 }
