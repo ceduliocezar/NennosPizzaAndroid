@@ -12,7 +12,7 @@ android {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
         versionCode 1
-        versionName "1.0"
+        versionName "0.1.0"
         testInstrumentationRunner "ceduliocezar.com.nennospizza.MockTestRunner"
 
         buildConfigField "String", "menuServiceUrl", "\"https://api.myjson.com/bins/\""
