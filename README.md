@@ -49,6 +49,9 @@ To run UI tests execute the following command on the root of the project.
 gradlew clean connectedAndroidTest
 ```
 
+## Integration / Acceptance tests
+Integration tests were implemented using Appium, for more instructions on how to run them, please see the README file under integration-tests folder.cd
+
 ## TODO
 - Create custom pizza from scratch.
 - Edit a pizza from menu.
@@ -57,6 +60,7 @@ gradlew clean connectedAndroidTest
 - Configure CircleCI to send code coverage and static code analysis to http://sonarcloud.io/
 - Implement cache of ingredients.
 - Implement cache of pizzas.
+- Setup local server for integration tests.
 
 ## Contribute
 
