@@ -115,38 +115,10 @@ public class PizzaListFragmentTest {
     }
 
     @Test
-    public void test_navigateToCreateCustomPizzaScreen() {
-
-        onView(withId(R.id.fab)).perform(click());
-        verify(navigator, times(1)).navigateToCreateCustomPizza(activityTestRule.getActivity());
-
-    }
-
-    @Test
     public void test_navigateToCartScreen() {
 
         onView(withId(R.id.tool_bar_cart_image)).perform(click());
         verify(navigator, times(1)).navigateToCartScreen(activityTestRule.getActivity());
-
-    }
-
-    @Test
-    public void test_selectPizza() throws Throwable {
-
-        final List<PizzaModel> pizzaModels = getPizzaModels();
-        verify(presenter).setView(viewArgumentCaptor.capture());
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                viewArgumentCaptor.getValue().showPizzas(pizzaModels);
-            }
-        });
-
-        onView(withId(R.id.pizza_recycler_view))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-
-        verify(presenter).userSelectedPizza(any(PizzaModel.class));
 
     }
 

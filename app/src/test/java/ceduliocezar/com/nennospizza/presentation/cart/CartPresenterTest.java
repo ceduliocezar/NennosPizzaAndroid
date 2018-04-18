@@ -78,9 +78,6 @@ public class CartPresenterTest {
     private ArgumentCaptor<DisposableObserver<Void>> voidDisposableCaptor;
 
     @Mock
-    private ProceedCheckout proceedCheckout;
-
-    @Mock
     private GetCartTotalPrice getCartTotalPrice;
 
     @Captor
@@ -93,16 +90,6 @@ public class CartPresenterTest {
         cartPresenter.setView(view);
 
         assertNotNull(cartPresenter.view);
-    }
-
-    @Test
-    public void test_initNotSetView() {
-
-        cartPresenter.init();
-
-        verify(logger).warn(anyString(), anyString());
-        verify(getCartItems).execute(disposableItemsCaptor.capture(), ArgumentMatchers.<Void>isNull());
-        verify(getCartTotalPrice).execute(disposableDoubleCaptor.capture(), ArgumentMatchers.<Void>isNull());
     }
 
     @Test
@@ -261,38 +248,7 @@ public class CartPresenterTest {
         cartPresenter.onClickCheckout();
 
         verify(view).showLoadingCheckout();
-        verify(proceedCheckout).execute(voidDisposableCaptor.capture(), ArgumentMatchers.<Void>isNull());
+        verify(view).startCheckoutService();
     }
 
-    @Test
-    public void test_onClickCheckoutSuccess() {
-
-        cartPresenter.setView(view);
-        cartPresenter.onClickCheckout();
-
-        verify(view).showLoadingCheckout();
-        verify(proceedCheckout).execute(voidDisposableCaptor.capture(), ArgumentMatchers.<Void>isNull());
-
-        voidDisposableCaptor.getValue().onNext(null);
-        voidDisposableCaptor.getValue().onComplete();
-
-        verify(view).showLoadingCheckout();
-        verify(view).finishScreen();
-        verify(view).navigateToAfterCheckoutScreen();
-    }
-
-    @Test
-    public void test_onClickCheckoutError() {
-
-        cartPresenter.setView(view);
-        cartPresenter.onClickCheckout();
-
-        verify(view).showLoadingCheckout();
-        verify(proceedCheckout).execute(voidDisposableCaptor.capture(), ArgumentMatchers.<Void>isNull());
-
-        voidDisposableCaptor.getValue().onError(throwable);
-
-        verify(view).showErrorOnCheckout();
-        verify(view).hideLoadingCheckout();
-    }
 }

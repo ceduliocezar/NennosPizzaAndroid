@@ -77,15 +77,6 @@ public class PizzasAdapter extends RecyclerView.Adapter<PizzasAdapter.ViewHolder
                 }
             }
         });
-
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onItemClick != null) {
-                    onItemClick.onSelectedPizza(pizzaModel);
-                }
-            }
-        });
     }
 
     public void setOnItemClick(@Nullable OnItemClick onItemClick) {

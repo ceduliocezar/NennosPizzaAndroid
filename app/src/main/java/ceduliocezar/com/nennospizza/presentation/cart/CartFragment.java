@@ -1,5 +1,6 @@
 package ceduliocezar.com.nennospizza.presentation.cart;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -57,6 +58,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     View emptyCartContainer;
 
     private CartItemAdapter cartItemAdapter;
+    private Callback callback;
 
 
     public CartFragment() {
@@ -112,7 +114,12 @@ public class CartFragment extends Fragment implements CartContract.View {
         super.onViewCreated(view, savedInstanceState);
         logger.debug(TAG, "onViewCreated");
         presenter.setView(this);
-        presenter.init();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.callback = (Callback) context;
     }
 
     @Override
@@ -136,6 +143,7 @@ public class CartFragment extends Fragment implements CartContract.View {
     @Override
     public void navigateToAfterCheckoutScreen() {
         logger.debug(TAG, "showAfterCheckoutMessage: ");
+        getActivity().finish();
         navigator.navigateToAfterCheckoutScreen(getActivity());
     }
 
@@ -220,8 +228,35 @@ public class CartFragment extends Fragment implements CartContract.View {
         getActivity().finish();
     }
 
+    @Override
+    public boolean checkoutServiceRunning() {
+        return callback.checkoutServiceRunning();
+    }
+
+    @Override
+    public void startCheckoutService() {
+        logger.debug(TAG, "startCheckoutService");
+        callback.startCheckoutService();
+    }
+
+    public void onCheckoutServiceFinished() {
+        logger.debug(TAG, "onCheckoutServiceFinished");
+        presenter.onCheckoutServiceFinished();
+    }
+
     public void onClickDrinks() {
         logger.debug(TAG, "onClickDrinks");
         navigator.navigateToDrinksScreen(getActivity());
+    }
+
+    public void onCartServiceConnected() {
+        logger.debug(TAG, "onCartServiceConnected");
+        presenter.init();
+    }
+
+    public interface Callback {
+        void startCheckoutService();
+
+        boolean checkoutServiceRunning();
     }
 }

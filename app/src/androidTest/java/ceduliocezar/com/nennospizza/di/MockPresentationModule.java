@@ -3,6 +3,8 @@ package ceduliocezar.com.nennospizza.di;
 import javax.inject.Singleton;
 
 import ceduliocezar.com.domain.logging.Logger;
+import ceduliocezar.com.domain.threading.PostExecutionThread;
+import ceduliocezar.com.domain.threading.ThreadExecutor;
 import ceduliocezar.com.nennospizza.navigation.Navigator;
 import ceduliocezar.com.nennospizza.presentation.cart.CartContract;
 import ceduliocezar.com.nennospizza.presentation.cart.CartItemModel;
@@ -91,5 +93,18 @@ public class MockPresentationModule {
     DrinksContract.Presenter providesPresenterDrinks() {
         return mock(DrinksContract.Presenter.class);
     }
+
+    @Provides
+    @Singleton
+    ThreadExecutor providesThreadExecutor() {
+        return mock(ThreadExecutor.class);
+    }
+
+    @Provides
+    @Singleton
+    PostExecutionThread providesPostExecutionThread() {
+        return mock(PostExecutionThread.class);
+    }
+
 
 }
